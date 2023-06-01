@@ -7,7 +7,7 @@ class Jugador(Persona):
         self.valor = valor
         self.club = club
         self.estado = estado   # (Estado físico)
-        self.cantidad_tarjetas = cantidad_tarjetas
+        self.cantidad_tarjetas = cantidad_tarjetas 
         self.posicion=posicion
 
     def retirar_jugador(self, club): 

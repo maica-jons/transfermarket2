@@ -2,9 +2,9 @@ from Persona import Persona
 
 class Usuario():
 
-    lista_usuarios = []
+    dic_usuarios = dict()
     lista_mail = []
-    lista_nom_usuarios = []
+    lista_nom_usuarios = [] 
 
     def __init__(self, nom_usuario, contra, nombre, apellido, dni, mail):
         self.nom_usuario = nom_usuario
