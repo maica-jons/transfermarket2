@@ -1,6 +1,3 @@
-import datetime
-import math
-
 class Persona():
 
     lista_personas = []
