@@ -1,5 +1,8 @@
-from Usuario import *
+from Liga import *
 
-liam = Usuario('Limson','1234', 'Liam', 'Mac Gaw', 44447670, 'jnjqnefaoen')
+dic_liga=dict()
+liam = Liga("liga","Arg")
+dic_liga['Arg'] = liam
 
-print(liam)
+for key in dic_liga.keys():
+    print(key,"--->",dic_liga.get(key).nombre)

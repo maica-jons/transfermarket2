@@ -1,7 +1,6 @@
 class Liga():
-    lista_ligas = [] #Total de ligas
+    dic_ligas = dict() #Total de ligas
     lista_nombre_ligas = []
-    lista_paises_ligas = [] #Cada país tiene máximo 1 liga (si creo una liga en un pais que ya tiene, no me deja)
 
     def __init__(self, nombre, pais, lista_clubes = [], cant_clubes = 0 ):
         self.nombre = nombre

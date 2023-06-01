@@ -83,14 +83,12 @@ def validar_valor_club(valor_del_club):
     return valor_del_club
 
 def elegir_liga():
-    for i in range(len(Liga.lista_nombre_ligas)):
-        print(Liga.lista_nombre_ligas[i])
-    liga_nombre = str(input("Elija la liga de las que están disponibles: "))
-    while liga_nombre not in Liga.lista_nombre_ligas:
-        liga_nombre = str(input("Esa liga no existe. Elija la liga de las que están disponibles: "))
-    for i in range(len(Liga.lista_ligas)):
-        if liga_nombre == Liga.lista_ligas[i].nombre:
-            liga = Liga.lista_ligas[i]
+    for key in Liga.dic_ligas.keys():
+        print(key,"--->",Liga.dic_ligas.get(key).nombre)
+    liga_pais = str(input("Elija el pais de la liga de las que están disponibles: "))
+    while liga_pais not in Liga.dic_ligas.keys():
+        liga_pais = str(input("Esa liga no existe. Elija la liga de las que están disponibles: "))
+    liga = Liga.dic_ligas.get(liga_pais)
     return liga
     
 def elegir_club(liga):
@@ -248,34 +246,30 @@ def menu_principal():
     while(menu != 10):
         guardo = menu()
         if guardo == 1:
+            pais = str(input("Ingrese el país al que pertenece la liga: "))
+            while pais in Liga.dic_ligas.keys():
+                pais = str(input("Ya existe una liga para ese país, no puede existir más de 1 liga por país. Ingrese otro país: "))
             nombre = str(input("Ingrese el nombre de la liga que desea agregar: "))
             while nombre in Liga.lista_nombre_ligas:   #No puede haber dos ligas con el mismo nombre ni dos ligas por pais
                 nombre = str(input("Ya existe una liga con ese nombre. Ingrese otro nombre para la liga: "))
-            pais = str(input("Ingrese el país al que pertenece la liga: "))
-            while pais in Liga.lista_paises_ligas:
-                pais = str(input("Ya existe una liga para ese país, no puede existir más de 1 liga por país. Ingrese otro país: "))
             liga = Liga(nombre,pais)
-            Liga.lista_ligas.append(liga)
-            for i in Liga.lista_ligas:
-                print(i)
+            Liga.dic_ligas[pais] = liga
             Liga.lista_nombre_ligas.append(liga.nombre)
-            Liga.lista_paises_ligas.append(liga.pais)
             guardar_archivos()
-       
+        
         elif guardo == 2:
-            if len(Liga.lista_nombre_ligas) == 0:
+            if len(Liga.dic_ligas) == 0:
                 print("No hay ninguna liga creada. Primero vaya a crear una.")
             else:
                 nombre = str(input("Ingrese el nombre del club que desea agregar: "))
                 try:
                     id = int(input("Ingrese un ID para el club (nro. o nros. enteros): "))
-                    while id in Club.lista_id_clubes: 
+                    while id in Club.dic_clubes.keys(): 
                         id = int(input("El ID ingresado ya existe para otro club. Ingrese otro ID para el club: "))
                 except: 
                     print("Ingreso erroneamente el id.")
-                Club.lista_id_clubes.append(id)
-                for i in range(len(Liga.lista_nombre_ligas)):
-                    print(Liga.lista_nombre_ligas[i])
+                for key,value in Liga.dic_ligas.items():
+                    print(key,"--->",value)
                 liga = str(input("Elija la liga a la que va a agregar el club. Las ligas disponibles son las siguientes: "))
                 while liga not in Liga.lista_nombre_ligas:
                     liga = str(input("La liga ingresada no existe. Elija una de la lista que se le presentó: "))
