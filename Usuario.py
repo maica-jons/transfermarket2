@@ -1,3 +1,5 @@
+from Persona import Persona
+
 class Usuario():
 
     lista_usuarios = []
