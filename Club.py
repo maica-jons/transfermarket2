@@ -10,6 +10,15 @@ class Club():
         self.lista_jugadores = lista_jugadores
     
     def comprar_jugador(self, club_vendedor, jugador):
+        """
+        Compra un jugador de otro club, siempre y cuando el club comprador tenga suficiente presupuesto.
+        Actualiza los atributos correspondientes de los clubes involucrados y del jugador.
+        Parámetros:
+            club_vendedor (Club): Club del cual se compra el jugador.
+            jugador (Jugador): Jugador a comprar.
+        Retorna:
+            None
+        """
         if jugador.valor <= self.presupuesto:
             club_vendedor.lista_jugadores.remove(jugador)
             club_vendedor.presupuesto += jugador.valor
@@ -23,10 +32,22 @@ class Club():
             print("No hay presupuesto suficiente para comprar ese jugador.")
 
     def modificar_presupuesto(self, monto):
+        """
+        Modifica el presupuesto del club sumando el monto especificado.
+        Parámetros:
+            monto (int): Monto a sumar al presupuesto del club.
+        Retorna:
+            None
+        """
         self.presupuesto += monto
         print("El nuevo presupuesto del club es", self.presupuesto)
     
     def buscar_arquero_valla_invicta(self):
+        """
+        Busca y registra que un arquero del club haya mantenido su valla invicta en un partido.
+        Retorna:
+        arquero (Jugador): Objeto Jugador del arquero que ha mantenido su valla invicta.
+        """
         for i in range(len(self.lista_jugadores)):
             if self.lista_jugadores[i].posicion == "Arquero":
                 print(self.lista_jugadores[i].dni, self.lista_jugadores[i].nombre, self.lista_jugadores[i].apellido)
@@ -43,6 +64,11 @@ class Club():
         return arquero
 
     def buscar_arquero_recibio_gol(self):
+        """
+        Busca y registra que un arquero del club haya recibido un gol en un partido.
+        Retorna:
+        arquero (Jugador): Objeto Jugador del arquero que ha recibido un gol.
+        """
         for i in range(len(self.lista_jugadores)):
             if self.lista_jugadores[i].posicion == "Arquero":
                 print(self.lista_jugadores[i].dni, self.lista_jugadores[i].nombre, self.lista_jugadores[i].apellido)
@@ -59,6 +85,11 @@ class Club():
         return arquero
 
     def buscar_goleador(self):
+        """
+        Busca y registra que un jugador del club ha metido un gol en un partido.
+        Retorna:
+        goleador (Jugador): Objeto Jugador del jugador que ha metido un gol.
+        """
         for i in range(len(self.lista_jugadores)):
             print(self.lista_jugadores[i].dni, self.lista_jugadores[i].nombre, self.lista_jugadores[i].apellido)
         esta_g = "No"
@@ -74,6 +105,11 @@ class Club():
         return goleador
     
     def buscar_asistidor(self):
+        """
+        Busca y registra que un jugador del club ha dado una asistencia en un partido.
+        Retorna:
+            asistidor (Jugador): Objeto Jugador del jugador que ha dado la asistencia.
+        """
         for i in range(len(self.lista_jugadores)):
             print(self.lista_jugadores[i].dni, self.lista_jugadores[i].nombre, self.lista_jugadores[i].apellido)
         esta_as = "No"
@@ -89,6 +125,11 @@ class Club():
         return asistidor
 
     def buscar_jugador_tarjeta(self):
+        """
+        Busca y registra que a un jugador del club se le ha sacado una tarjeta en un partido.
+        Returns:
+            jugador (Jugador): Objeto Jugador del jugador al que se le ha sacado la tarjeta. 
+        """
         for i in range(len(self.lista_jugadores)):
             print(self.lista_jugadores[i].dni, self.lista_jugadores[i].nombre, self.lista_jugadores[i].apellido)
         esta_j = "No"
