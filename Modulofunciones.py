@@ -9,12 +9,15 @@ import datetime
 import math
 
 def validar_longitud_dni(dni):
-
-    #Esta funcion recibe como parametro de entrada el DNI, y el objetivo de esta funcion es validar
-    #que el DNI tenga una longitud valida. Para asegurarnos de esto, en caso de que no tenga 
-    #la longitud esperada, se lo siga pidiendo al usuario hasta que ingrese uno valido,
-    #y ese va a ser el que la funcion retorne. 
-
+    """
+    Valida la longitud de un número de DNI.
+    Solicita al usuario que ingrese un nuevo DNI válido si el número ingresado es menor que 10000000 o mayor que 99999999.
+    Devuelve el DNI validado.
+    Parámetros:
+        dni (int): Número de DNI a validar.
+    Retorna:
+        int: DNI validado.
+    """
     while dni <= 10000000 or dni >= 99999999:
         dni = int(input("Ingrese nuevamente un DNI valido: "))
     return dni
@@ -24,7 +27,7 @@ def validar_fecha_nacimiento(fecha_nacimiento):
     Valida si una fecha de nacimiento está en el formato correcto.
     Parámetros:
         fecha_nacimiento (str): La fecha de nacimiento en formato dd/mm/aaaa.
-    Devuelve:
+    Retorna:
         str: La fecha de nacimiento válida si cumple con el formato.
     Raises:
         ValueError: Si la fecha de nacimiento no está en el formato correcto.
@@ -40,7 +43,7 @@ def calcular_edad(fecha_nacimiento):
     Calcula la edad en años a partir de una fecha de nacimiento.
     Parámetros:
         fecha_nacimiento (str): La fecha de nacimiento en formato dd/mm/aaaa.
-    Devuelve:
+    Retorna:
         int: La edad calculada en años.
     Raises:
         ValueError: Si la fecha de nacimiento no está en el formato correcto.
@@ -56,7 +59,7 @@ def validar_estatura(estatura):
     Valida que una estatura esté dentro del rango válido y solicita una nueva entrada en caso contrario.
     Parámetros:
         estatura (float): La estatura en metros a validar.
-    Devuelve:
+    Retorna:
         float: La estatura validada dentro del rango permitido.
     """
     while estatura <= 1 or estatura >= 2.5:
@@ -68,7 +71,7 @@ def validar_peso(peso):
     Valida que un peso esté dentro del rango válido y solicita una nueva entrada en caso contrario.
     Parámetros:
         peso (float): El peso en kilogramos a validar.
-    Devuelve:
+    Retorna:
         float: El peso validado dentro del rango permitido.
     """
     while peso <= 30 or peso >= 200:
@@ -80,7 +83,7 @@ def validar_valor(valor):
     Valida que un valor del jugador esté dentro del rango válido y solicita una nueva entrada en caso contrario.
     Parámetros:
         valor (float): El valor del jugador a validar.
-    Devuelve:
+    Retorna:
         float: El valor del jugador validado dentro del rango permitido.
     """
     while valor <= 0 or valor >= 2000000:
@@ -92,7 +95,7 @@ def validar_estado(estado):
     Valida que un estado físico del jugador esté correctamente ingresado y solicita una nueva entrada en caso contrario.
     Parámetros:
         estado (str): El estado físico del jugador a validar.
-    Devuelve:
+    Retorna:
         str: El estado físico del jugador validado correctamente.
     """
 
@@ -699,6 +702,11 @@ def guardo1():
                 print("El nombre de usuario no existe.")
 
 def guardo2():
+    """
+    Solicita al usuario que ingrese su información personal, como nombre, apellido, DNI, correo electrónico, nombre de usuario y contraseña.
+    Verifica la validez de la información ingresada y crea un nuevo objeto de usuario con los datos proporcionados.
+    Finalmente, guarda el nuevo usuario en la base de datos.
+    """
     nombre = input("Ingrese su nombre: ")
     apellido = input("Ingrese su apellido: ")
     dni_aprobado = "no"
@@ -724,6 +732,11 @@ def guardo2():
     guardar_usuario()
 
 def guardo3():
+    """
+    Permite al usuario cambiar su contraseña. Verifica si hay usuarios registrados y solicita al usuario que ingrese su nombre de usuario y contraseña actual.
+    Si la contraseña ingresada es correcta, se solicita una nueva contraseña y se actualiza en el objeto de usuario correspondiente.
+    Finalmente, guarda los cambios en la base de datos.
+    """
     if len(Usuario.dic_usuarios) == 0:
         print("No hay ningun usuario registrado. Para cambiar una contraseña, debe haber algún usuario registrado.")
     else:
