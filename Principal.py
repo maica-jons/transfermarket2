@@ -1,4 +1,4 @@
-from ModuloFunciones import *
+from Modulofunciones import *
 
 leer_usuarios()
 while(menu_usuario != 4):

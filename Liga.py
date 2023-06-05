@@ -10,6 +10,18 @@ class Liga():
 
 
     def jugar_partido(self, club1, club2): #Club1 es local y club2 es vistante
+
+        """
+        Simula un partido entre dos clubes de la liga.
+        Recibe como parámetros los objetos de los clubes que juegan el partido: club1 y club2.
+        Permite ingresar la información sobre goles y tarjetas del partido.
+        Registra los goles, asistencias y tarjetas a los jugadores correspondientes de cada club.
+        Al final del partido, muestra los arqueros con valla invicta.
+        Parámetros:
+        club1 (Club): Objeto del club local que participa en el partido.
+        club2 (Club): Objeto del club visitante que participa en el partido.
+        """
+
         print("Arrancó el partido!")
         goles = input("Ingrese 's' si HUBO goles y 'n' si NO HUBO goles: ")
         while goles != "s" and goles != "n":
