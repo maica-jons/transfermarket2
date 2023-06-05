@@ -8,9 +8,15 @@ class Arquero(Jugador):
         self.goles_recibidos = goles_recibidos
 
     def tener_valla_invicta(self):
+        """
+        Incrementa el contador de vallas invictas del arquero.
+        """
         self.vallas_invictas += 1
 
     def recibir_gol(self):
+        """
+        Incrementa el contador de goles recibidos del arquero.
+        """
         self.goles_recibidos += 1
     
     def __str__(self):
