@@ -1,6 +1,6 @@
 from Persona import Persona
 
-class Usuario():
+class Usuario(Persona):
 
     dic_usuarios = dict()
     lista_mail = []
