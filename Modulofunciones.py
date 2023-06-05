@@ -9,11 +9,26 @@ import datetime
 import math
 
 def validar_longitud_dni(dni):
+
+    #Esta funcion recibe como parametro de entrada el DNI, y el objetivo de esta funcion es validar
+    #que el DNI tenga una longitud valida. Para asegurarnos de esto, en caso de que no tenga 
+    #la longitud esperada, se lo siga pidiendo al usuario hasta que ingrese uno valido,
+    #y ese va a ser el que la funcion retorne. 
+
     while dni <= 10000000 or dni >= 99999999:
         dni = int(input("Ingrese nuevamente un DNI valido: "))
     return dni
 
 def validar_fecha_nacimiento(fecha_nacimiento):
+    """
+    Valida si una fecha de nacimiento está en el formato correcto.
+    Parámetros:
+        fecha_nacimiento (str): La fecha de nacimiento en formato dd/mm/aaaa.
+    Devuelve:
+        str: La fecha de nacimiento válida si cumple con el formato.
+    Raises:
+        ValueError: Si la fecha de nacimiento no está en el formato correcto.
+    """
     try:
         datetime.datetime.strptime(fecha_nacimiento, '%d/%m/%Y')
         return fecha_nacimiento
@@ -21,6 +36,15 @@ def validar_fecha_nacimiento(fecha_nacimiento):
         raise ValueError("La fecha de nacimiento debe estar en formato dd/mm/aaaa")
 
 def calcular_edad(fecha_nacimiento):
+    """
+    Calcula la edad en años a partir de una fecha de nacimiento.
+    Parámetros:
+        fecha_nacimiento (str): La fecha de nacimiento en formato dd/mm/aaaa.
+    Devuelve:
+        int: La edad calculada en años.
+    Raises:
+        ValueError: Si la fecha de nacimiento no está en el formato correcto.
+    """
     fecha_nacimiento = datetime.datetime.strptime(fecha_nacimiento, "%d/%m/%Y").date()
     fecha_actual = datetime.date.today()
     diferencia = fecha_actual - fecha_nacimiento
@@ -28,61 +52,161 @@ def calcular_edad(fecha_nacimiento):
     return edad
 
 def validar_estatura(estatura):
+    """
+    Valida que una estatura esté dentro del rango válido y solicita una nueva entrada en caso contrario.
+    Parámetros:
+        estatura (float): La estatura en metros a validar.
+    Devuelve:
+        float: La estatura validada dentro del rango permitido.
+    """
     while estatura <= 1 or estatura >= 2.5:
         estatura = float(input("Ingrese nuevamente una estatura en metros valida: "))
     return estatura
 
 def validar_peso(peso):
+    """
+    Valida que un peso esté dentro del rango válido y solicita una nueva entrada en caso contrario.
+    Parámetros:
+        peso (float): El peso en kilogramos a validar.
+    Devuelve:
+        float: El peso validado dentro del rango permitido.
+    """
     while peso <= 30 or peso >= 200:
         peso = float(input("Ingrese el peso nuevamente, en kilogramos. "))
     return peso
 
 def validar_valor(valor):
+    """
+    Valida que un valor del jugador esté dentro del rango válido y solicita una nueva entrada en caso contrario.
+    Parámetros:
+        valor (float): El valor del jugador a validar.
+    Devuelve:
+        float: El valor del jugador validado dentro del rango permitido.
+    """
     while valor <= 0 or valor >= 2000000:
         valor = float(input("Ingrese nuevamente un valor del jugador válido: "))
     return valor
 
 def validar_estado(estado):
+    """
+    Valida que un estado físico del jugador esté correctamente ingresado y solicita una nueva entrada en caso contrario.
+    Parámetros:
+        estado (str): El estado físico del jugador a validar.
+    Devuelve:
+        str: El estado físico del jugador validado correctamente.
+    """
+
     while estado != "Activo" and estado != "activo" and estado != "Lesionado" and estado != "lesionado":
         estado = input("Ingrese nuevamente un estado físico del jugador correctamente: ")
     return estado
 
 def validar_cantidad_tarjetas(cantidad_tarjetas):
+    """
+    Valida y devuelve la cantidad de tarjetas ingresada por el usuario.
+    Solicita al usuario que ingrese un número entero igual o mayor a cero,
+    representando la cantidad de tarjetas que le sacaron a un jugador.
+    Parámetros:
+    - cantidad_tarjetas (int): La cantidad de tarjetas del jugador.
+    Retorna:
+    - cantidad_tarjetas (int): La cantidad de tarjetas validada por el usuario.
+    """
     while cantidad_tarjetas < 0:
         cantidad_tarjetas = int(input("Ingrese 0 o la cantidad de tarjetas que le sacaron al jugador correctamente: "))
     return cantidad_tarjetas
 
 def validar_goles(goles):
+    """
+    Valida y devuelve la cantidad de goles ingresada por el usuario.
+    Solicita al usuario que ingrese un número entero igual o mayor a cero,
+    representando la cantidad de goles marcados por un jugador.
+    Parámetros:
+    - goles (int): La cantidad de goles del jugador.
+    Retorna:
+    - goles (int): La cantidad de goles validada por el usuario.
+    """
     while goles < 0:
         goles = int(input("Ingrese nuevamente una cantidad de goles válida: "))
     return goles
 
 def validar_asistencia(asistencia):
+    """
+    Valida y devuelve la cantidad de asistencias ingresada por el usuario.
+    Solicita al usuario que ingrese un número entero igual o mayor a cero,
+    representando la cantidad de asistencias realizadas por un jugador.
+    Parámetros:
+    - asistencia (int): La cantidad de asistencias del jugador.
+    Retorna:
+    - asistencia (int): La cantidad de asistencias validada por el usuario.
+    """
     while asistencia < 0:
         asistencia = int(input("Ingrese nuevamente una cantidad de asistencias válida: "))
     return asistencia
 
 def validar_vallas_invictas(vallas_invictas):
+    """
+    Valida y devuelve el número de vallas invictas ingresado por el usuario.
+    Solicita al usuario que ingrese un número entero igual o mayor a cero,
+    representando la cantidad de vallas invictas logradas por un arquero.
+    Parámetros:
+    - vallas_invictas (int): El número de vallas invictas del arquero.
+    Retorna:
+    - vallas_invictas (int): El número de vallas invictas validado por el usuario.
+    """
     while vallas_invictas < 0:
         vallas_invictas = int(input("Ingrese un numero válido de vallas invictas: "))
     return vallas_invictas
 
 def validar_goles_recibidos(goles_recibidos):
+    """
+    Valida y devuelve la cantidad de goles recibidos ingresada por el usuario.
+    Solicita al usuario que ingrese un número entero igual o mayor a cero,
+    representando la cantidad de goles recibidos por un arquero.
+    Parámetros:
+    - goles_recibidos (int): La cantidad de goles recibidos por el arquero.
+    Retorna:
+    - goles_recibidos (int): La cantidad de goles recibidos validada por el usuario.
+    """
     while goles_recibidos < 0:
         goles_recibidos = int(input("Ingrese una cantidad válida de goles recibidos: "))
     return goles_recibidos
     
 def validar_presupuesto(presupuesto):
+    """
+    Valida y devuelve el monto de presupuesto ingresado por el usuario.
+    Solicita al usuario que ingrese un número entero igual o mayor a cero,
+    representando el monto de presupuesto del club.
+    Parámetros:
+    - presupuesto (int): El monto de presupuesto.
+    Retorna:
+    - presupuesto (int): El monto de presupuesto validado por el usuario.
+    """
     while presupuesto < 0:
         presupuesto = int(input("Ingrese un monto de presupuesto válido: "))
     return presupuesto
 
 def validar_valor_club(valor_del_club):
+    """
+    Valida y devuelve el valor del club ingresado por el usuario.
+    Solicita al usuario que ingrese un número decimal igual o mayor a cero,
+    representando el valor del club.
+    Parámetros:
+    - valor_del_club (float): El valor del club.
+    Retorna:
+    - valor_del_club (float): El valor del club validado por el usuario.
+    """
     while valor_del_club < 0:
         valor_del_club = float(input("Ingrese un valor de club válido: "))
     return valor_del_club
 
 def elegir_liga():
+    """
+    Permite al usuario elegir una liga de fútbol disponible.
+    Muestra una lista de las ligas disponibles junto con sus respectivos países.
+    Solicita al usuario que elija el país de la liga deseada y valida su selección.
+    La función retorna la instancia de la clase Liga correspondiente a la liga seleccionada.
+    Retorna:
+    - liga (Liga): Instancia de la clase Liga correspondiente a la liga seleccionada por el usuario.
+    """
     for key in Liga.dic_ligas.keys():
         print(key,"--->",Liga.dic_ligas.get(key).nombre)
     liga_pais = str(input("Elija el pais de la liga de las que están disponibles: "))
@@ -92,6 +216,16 @@ def elegir_liga():
     return liga
     
 def elegir_club(liga):
+    """
+    Permite al usuario elegir un club de fútbol de una liga específica.
+    Muestra una lista de los clubes disponibles en la liga proporcionada.
+    Solicita al usuario que ingrese el ID del club deseado y valida su selección.
+    La función retorna la instancia de la clase Club correspondiente al club seleccionado.
+    Parámetros:
+    - liga (Liga): Instancia de la clase Liga que representa la liga en la que se elige el club.
+    Retorna:
+    - club (Club): Instancia de la clase Club correspondiente al club seleccionado por el usuario.
+    """
     for i in range(len(liga.lista_clubes)):
         print(liga.lista_clubes[i].id, liga.lista_clubes[i].nombre)
     esta = "No"
@@ -106,6 +240,16 @@ def elegir_club(liga):
     return club
 
 def elegir_jugador(club):
+    """
+    Permite al usuario elegir un jugador de fútbol de un club específico.
+    Muestra una lista de los jugadores disponibles en el club proporcionado.
+    Solicita al usuario que ingrese el DNI del jugador deseado y valida su selección.
+    La función retorna la instancia de la clase Jugador correspondiente al jugador seleccionado.
+    Parámetros:
+    - club (Club): Instancia de la clase Club que representa el club en el que se elige el jugador.
+    Retorna:
+    - jugador (Jugador): Instancia de la clase Jugador correspondiente al jugador seleccionado por el usuario.
+    """
     for i in range(len(club.lista_jugadores)):
         print(club.lista_jugadores[i].dni, club.lista_jugadores[i].nombre, club.lista_jugadores[i].apellido)   
     esta = "No"
@@ -119,12 +263,25 @@ def elegir_jugador(club):
     return jugador
 
 def guardar_usuario():
+    """
+    Guarda la información de los usuarios en un archivo de texto.
+    Abre el archivo 'usuarios.txt' en modo escritura y guarda la información de los usuarios
+    almacenada en la lista Usuario.lista_usuarios. Cada usuario se guarda en una línea del archivo,
+    con el formato "nom_usuario,contra,nombre,apellido,dni,mail". Finalmente, cierra el archivo.
+    """
     with open('./usuarios.txt','w') as archivo_usuarios:
         for usuario in Usuario.lista_usuarios:
             archivo_usuarios.write(f"{usuario.nom_usuario},{usuario.contra},{usuario.nombre},{usuario.apellido},{usuario.dni},{usuario.mail}\n")
     archivo_usuarios.close()
 
 def leer_usuarios():
+    """
+    Lee la información de los usuarios desde un archivo de texto.
+    Intenta abrir el archivo 'usuarios.txt' en modo lectura y leer la información de los usuarios.
+    Cada línea del archivo se separa por comas y se crea una instancia de la clase Usuario con los datos correspondientes.
+    La instancia de Usuario se agrega a las listas Usuario.lista_usuarios, Usuario.lista_nom_usuarios y Usuario.lista_mail.
+    Si ocurre una excepción durante el proceso de lectura, no se realiza ninguna acción.
+    """
     try:
         with open('./usuarios.txt','r') as archivo_usuarios:
             for usuario in archivo_usuarios:
@@ -139,6 +296,12 @@ def leer_usuarios():
         print("")
 
 def guardar_archivos():
+    """
+    Guarda la información de las ligas, clubes, arqueros y jugadores de campo en archivos de texto.
+    Abre los archivos 'ligas.txt', 'clubes.txt', 'arqueros.txt' y 'jugadorescampo.txt' en modo escritura.
+    Escribe la información correspondiente de cada entidad en los respectivos archivos.
+    Finalmente, cierra los archivos.
+    """
     with open('./ligas.txt','w') as archivo_ligas:
         with open('./clubes.txt','w') as archivo_clubes:
             with open('./arqueros.txt','w') as archivo_arqueros:
@@ -157,6 +320,13 @@ def guardar_archivos():
     archivo_jugadorescampo.close()
 
 def leer_ligas():
+    """
+    Lee la información de las ligas desde un archivo de texto.
+    Intenta abrir el archivo 'ligas.txt' en modo lectura y lee la información de las ligas.
+    Cada línea del archivo se separa por comas y se crea una instancia de la clase Liga con los datos correspondientes.
+    La instancia de Liga se agrega a las listas Liga.lista_ligas, Liga.lista_nombre_ligas y Liga.lista_paises_ligas.
+    Si ocurre una excepción durante el proceso de lectura, no se realiza ninguna acción.
+    """
     try:
         with open('./ligas.txt','r') as archivo_ligas:
             for liga in archivo_ligas:
@@ -171,6 +341,13 @@ def leer_ligas():
         print("")
     
 def leer_clubes():
+    """
+    Lee la información de los clubes desde un archivo de texto.
+    Intenta abrir el archivo 'clubes.txt' en modo lectura y lee la información de los clubes.
+    Cada línea del archivo se separa por comas y se crea una instancia de la clase Club con los datos correspondientes.
+    La instancia de Club se agrega a las listas Club.lista_clubes y Club.lista_id_clubes.
+    Si ocurre una excepción durante el proceso de lectura, no se realiza ninguna acción.
+    """
     try:
         with open('./clubes.txt','r') as archivo_clubes:
             for club in archivo_clubes:
@@ -184,6 +361,14 @@ def leer_clubes():
         print("")
 
 def leer_arqueros():
+    """
+    Lee la información de los arqueros desde un archivo de texto.
+    Intenta abrir el archivo 'arqueros.txt' en modo lectura y lee la información de los arqueros.
+    Cada línea del archivo se separa por comas y se crea una instancia de la clase Arquero con los datos correspondientes.
+    La instancia de Arquero se agrega a la lista Arquero.lista_arqueros.
+    Además, se agrega el DNI del arquero a la lista Persona.lista_dni_personas.
+    Si ocurre una excepción durante el proceso de lectura, no se realiza ninguna acción.
+    """
     try:
         with open('./arqueros.txt','r') as archivo_arqueros:
             for arquero in archivo_arqueros:
@@ -197,6 +382,13 @@ def leer_arqueros():
         print("")
 
 def leer_jugadorescampo():
+    """
+    Lee la información de los jugadores de campo desde un archivo de texto.
+    Intenta abrir el archivo 'jugadorescampo.txt' en modo lectura y lee la información de los jugadores de campo.
+    Cada línea del archivo se separa por comas y se crea una instancia de la clase JugadorDeCampo con los datos correspondientes.
+    El DNI del jugador de campo se agrega a la lista Persona.lista_dni_personas.
+    Si ocurre una excepción durante el proceso de lectura, no se realiza ninguna acción.
+    """
     try:
         with open('./jugadorescampo.txt','r') as archivo_jugadorescampo:
             for jugadorcampo in archivo_jugadorescampo:
@@ -209,6 +401,15 @@ def leer_jugadorescampo():
         print("")
 
 def menu():
+    """
+    Muestra un menú de opciones y devuelve la opción elegida por el usuario.
+    Solicita al usuario que ingrese un número correspondiente a una opción del menú.
+    Las opciones van del 1 al 10 e incluyen acciones como agregar una liga, agregar un club, agregar un jugador,
+    modificar un club, modificar un jugador, jugar un partido, visualizar una liga, visualizar un club, visualizar un jugador
+    y cerrar sesión (salir).
+    El número ingresado por el usuario se devuelve como resultado de la función.
+    """
+
     menu=int(input("""Elija una opción del menú (Ingrese el número):
 1- Agregar Liga
 2- Agregar Club
@@ -225,6 +426,14 @@ def menu():
     return menu
 
 def menu_usuario():
+    """
+    Muestra un menú de opciones para usuarios y devuelve la opción elegida por el usuario.
+    Solicita al usuario que ingrese un número correspondiente a una opción del menú.
+    Las opciones van del 1 al 4 e incluyen acciones como iniciar sesión, registrarse,
+    cambiar contraseña y salir.
+    El número ingresado por el usuario se devuelve como resultado de la función.
+    Si ocurre un error al leer la opción del menú, se muestra un mensaje de error.
+    """
     try:
         menu=int(input("""Elija una opción del menú (Ingrese el número):
     1- Iniciar sesión
@@ -243,6 +452,14 @@ def menu_principal():
     # leer_clubes()
     # leer_arqueros()
     # leer_jugadorescampo()
+    """
+    Muestra un menú principal con diversas opciones y ejecuta las acciones correspondientes
+    basadas en las opciones seleccionadas por el usuario.
+    Las opciones del menú incluyen acciones como agregar una liga, agregar un club,
+    agregar un jugador, comprar jugadores, modificar presupuesto, retirar jugador,
+    jugar un partido, mostrar información de ligas, clubes y jugadores, y salir del programa.
+    Cada opción ejecuta una serie de pasos para realizar la acción correspondiente.
+    """
     while(menu != 10):
         guardo = menu()
         if guardo == 1:
@@ -460,6 +677,11 @@ def menu_principal():
             break
 
 def guardo1():
+    """
+    Verifica si existen usuarios registrados y solicita al usuario que ingrese su nombre de usuario y contraseña.
+    Si las credenciales son válidas, se muestra un mensaje de ingreso exitoso y se llama a la función `menu_principal`.
+    Si el nombre de usuario no existe, se muestra un mensaje de error correspondiente.
+    """
     if len(Usuario.dic_usuarios) == 0:
         print("No hay ningun usuario registrado. Primero vaya a registrarse.")
     else: 
