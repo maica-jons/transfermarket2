@@ -228,17 +228,15 @@ def elegir_club(liga):
     Retorna:
     - club (Club): Instancia de la clase Club correspondiente al club seleccionado por el usuario.
     """
-    for i in range(len(liga.lista_clubes)):
-        print(liga.lista_clubes[i].id, liga.lista_clubes[i].nombre)
+    for key in liga.dic_clubes.items():
+        print(key, "--->", liga.dic_clubes.get(key).nombre)
     esta = "No"
     while esta == "No":
         idclub = int(input("Ingrese el id del club de los que están disponibles: "))
-        for i in range(len(liga.lista_clubes)):
-            if idclub == liga.lista_clubes[i].id:
+        for key in liga.dic_clubes.items():
+            if idclub == key:
                 esta = "Sí"
-    for i in range(len(liga.lista_clubes)):
-        if idclub == liga.lista_clubes[i].id:
-            club = liga.lista_clubes[i]
+    club = liga.dic_clubes.get(idclub)
     return club
 
 def elegir_jugador(club):
@@ -252,16 +250,15 @@ def elegir_jugador(club):
     Retorna:
     - jugador (Jugador): Instancia de la clase Jugador correspondiente al jugador seleccionado por el usuario.
     """
-    for i in range(len(club.lista_jugadores)):
-        print(club.lista_jugadores[i].dni, club.lista_jugadores[i].nombre, club.lista_jugadores[i].apellido)   
+    for key in club.dic_jugadores.items():
+        print(key, "--->", club.dic_jugadores.get(key).nombre, club.dic_jugadores.get(key).apellido)   
     esta = "No"
     while esta == "No":
         dni = int(input("Ingrese el dni del jugador de los que están disponibles: "))
-        for i in range(len(club.lista_jugadores)):
-            if dni == club.lista_jugadores[i].dni:
+        for key in club.dic_jugadores.items():
+            if dni == key:
                 esta = "Sí"
-        if dni == club.lista_jugadores[i].dni:
-            jugador = club.lista_jugadores[i]
+    jugador = club.dic_jugadores.get(dni)
     return jugador
 
 def guardar_usuario():
@@ -291,8 +288,7 @@ def leer_usuarios():
                 datos_usuario = usuario.split(",")
                 datos_usuario[5] = datos_usuario[5].rstrip("\n")
                 obj_usuario = Usuario(datos_usuario[0], datos_usuario[1], datos_usuario[2], datos_usuario[3], datos_usuario[4], datos_usuario[5])
-                Usuario.lista_usuarios.append(obj_usuario)
-                Usuario.lista_nom_usuarios.append(obj_usuario.nom_usuario)
+                Usuario.dic_usuarios[obj_usuario.nom_usuario] = obj_usuario
                 Usuario.lista_mail.append(obj_usuario.mail)
         archivo_usuarios.close()
     except:
@@ -511,7 +507,7 @@ def menu_principal():
                 Club.dic_clubes[id] = club
                 for key in Liga.dic_ligas.items():
                     if club.liga == Liga.dic_ligas.get(key).nombre:
-                        Liga.dic_ligas.get(key).lista_clubes.append(club)
+                        Liga.dic_ligas.get(key).dic_clubes[id] = club
                         Liga.dic_ligas.get(key).cant_clubes+=1
                 guardar_archivos()
         
@@ -598,7 +594,7 @@ def menu_principal():
                     Arquero.dic_arqueros[dni] = arquero
                     for key in Club.dic_clubes.items():
                         if arquero.club == Club.dic_clubes.get(key).nombre:
-                            Club.dic_clubes.get(key).lista_jugadores.append(arquero)
+                            Club.dic_clubes.get(key).dic_jugadores[dni] = arquero
                     guardar_archivos()
 
                 else: 
@@ -617,7 +613,7 @@ def menu_principal():
                     JugadorDeCampo.dic_jugadorescampo[dni] = jugador_de_campo
                     for key in Club.dic_clubes.items():
                         if jugador_de_campo.club == Club.dic_clubes.get(key).nombre:
-                            Club.dic_clubes.get(key).lista_jugadores.append(jugador_de_campo)
+                            Club.dic_clubes.get(key).dic_jugadores[dni] = jugador_de_campo
                     guardar_archivos()
         
         elif guardo == 4:

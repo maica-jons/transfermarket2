@@ -1,12 +1,12 @@
 class Liga():
-    
+
     dic_ligas = dict() #Total de ligas
     lista_nombre_ligas = []
 
-    def __init__(self, nombre, pais, lista_clubes = [], cant_clubes = 0 ):
+    def __init__(self, nombre, pais, dic_clubes = dict(), cant_clubes = 0 ):
         self.nombre = nombre
         self.pais = pais
-        self.lista_clubes = lista_clubes  #Clubes de cada liga
+        self.dic_clubes = dic_clubes  #Clubes de cada liga
         self.cant_clubes =  cant_clubes
 
 

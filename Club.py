@@ -1,13 +1,13 @@
 class Club():
     dic_clubes = dict()
     
-    def __init__(self, nombre, id, liga, presupuesto = 100000, valor_del_club = 0, lista_jugadores = []):
+    def __init__(self, nombre, id, liga, presupuesto = 100000, valor_del_club = 0, dic_jugadores = dict()):
         self.nombre = nombre
         self.id = id
         self.liga = liga
         self.presupuesto = presupuesto
         self.valor_del_club = valor_del_club
-        self.lista_jugadores = lista_jugadores
+        self.dic_jugadores = dic_jugadores
     
     def comprar_jugador(self, club_vendedor, jugador):
         """
