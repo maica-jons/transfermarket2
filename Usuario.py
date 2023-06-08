@@ -5,8 +5,8 @@ class Usuario(Persona):
     dic_usuarios = dict()
     lista_mail = []
 
-    def __init__(self, nom_usuario, contra, nombre, apellido, dni, mail = None, edad = None, nacionalidad = None, estatura = None, peso = None):
-        Persona.__init__(self, nombre, apellido, dni, edad, nacionalidad, estatura, peso)  
+    def __init__(self, nom_usuario, contra, nombre, apellido, dni, mail):
+        Persona.__init__(self, nombre, apellido, dni)  
         self.nom_usuario = nom_usuario
         self.contra = contra
         self.nombre = nombre
