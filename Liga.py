@@ -1,4 +1,5 @@
 class Liga():
+    
     dic_ligas = dict() #Total de ligas
     lista_nombre_ligas = []
 

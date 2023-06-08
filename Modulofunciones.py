@@ -273,7 +273,8 @@ def guardar_usuario():
     con el formato "nom_usuario,contra,nombre,apellido,dni,mail". Finalmente, cierra el archivo.
     """
     with open('./usuarios.txt','w') as archivo_usuarios:
-        for usuario in Usuario.lista_usuarios:
+        for key in Usuario.dic_usuarios.items():
+            usuario = Usuario.dic_usuarios.get(key)
             archivo_usuarios.write(f"{usuario.nom_usuario},{usuario.contra},{usuario.nombre},{usuario.apellido},{usuario.dni},{usuario.mail}\n")
     archivo_usuarios.close()
 
@@ -309,13 +310,17 @@ def guardar_archivos():
         with open('./clubes.txt','w') as archivo_clubes:
             with open('./arqueros.txt','w') as archivo_arqueros:
                 with open('./jugadorescampo.txt','w') as archivo_jugadorescampo:
-                    for liga in Liga.lista_ligas:
+                    for key in Liga.dic_ligas.items():
+                        liga = Liga.dic_ligas.get(key)
                         archivo_ligas.write(f"{liga.nombre},{liga.pais},{liga.lista_clubes},{liga.cant_clubes}\n")
-                    for club in Club.lista_clubes:
+                    for key in Club.dic_clubes.items():
+                        club = Club.dic_clubes.get(key)
                         archivo_clubes.write(f"{club.nombre},{club.id},{club.liga},{club.presupuesto},{club.valor_del_club},{club.lista_jugadores}\n")
-                    for arquero in Arquero.lista_arqueros:
+                    for key in Arquero.dic_arqueros.items():
+                        arquero = Arquero.dic_arqueros.get(key)
                         archivo_arqueros.write(f"{arquero.nombre},{arquero.apellido},{arquero.dni},{arquero.edad},{arquero.nacionalidad},{arquero.estatura},{arquero.peso},{arquero.valor},{arquero.club},{arquero.estado},{arquero.cantidad_tarjetas},{arquero.posicion},{arquero.vallas_invictas},{arquero.goles_recibidos}\n")
-                    for jugadorcampo in JugadorDeCampo.lista_jugadorescampo:
+                    for key in JugadorDeCampo.dic_jugadorescampo.items():
+                        jugadorcampo = JugadorDeCampo.dic_jugadorescampo.get(key)
                         archivo_jugadorescampo.write(f"{jugadorcampo.nombre},{jugadorcampo.apellido},{jugadorcampo.dni},{jugadorcampo.edad},{jugadorcampo.nacionalidad},{jugadorcampo.estatura},{jugadorcampo.peso},{jugadorcampo.valor},{jugadorcampo.club},{jugadorcampo.estado},{jugadorcampo.cantidad_tarjetas},{jugadorcampo.posicion},{jugadorcampo.goles},{jugadorcampo.asistencias}\n")
     archivo_ligas.close()
     archivo_clubes.close()
@@ -336,9 +341,8 @@ def leer_ligas():
                 datos_liga = liga.split(',')
                 datos_liga[3] = datos_liga[3].rstrip("\n")
                 obj_liga = Liga(datos_liga[0],datos_liga[1],datos_liga[2],datos_liga[3])
-                Liga.lista_ligas.append(obj_liga)
+                Liga.dic_ligas[obj_liga.pais] = obj_liga
                 Liga.lista_nombre_ligas.append(obj_liga.nombre)
-                Liga.lista_paises_ligas.append(obj_liga.pais)
         archivo_ligas.close()
     except:
         print("")
@@ -357,8 +361,7 @@ def leer_clubes():
                 datos_club = club.split(',')
                 datos_club[5] = datos_club[5].rstrip("\n")
                 obj_club = Club(datos_club[0],datos_club[1],datos_club[2],datos_club[3],datos_club[4],datos_club[5])
-                Club.lista_clubes.append(obj_club)
-                Club.lista_id_clubes.append(obj_club.id)
+                Club.dic_clubes[obj_club.id] = obj_club
         archivo_clubes.close()
     except:
         print("")
@@ -378,7 +381,7 @@ def leer_arqueros():
                 datos_arquero = arquero.split(',')
                 datos_arquero[14] = datos_arquero[14].rstrip("\n")
                 obj_arquero = Arquero(datos_arquero[0],datos_arquero[1],datos_arquero[2],datos_arquero[3],datos_arquero[4],datos_arquero[5],datos_arquero[6],datos_arquero[7],datos_arquero[8],datos_arquero[9],datos_arquero[10],datos_arquero[11],datos_arquero[12],datos_arquero[13],datos_arquero[14])
-                Arquero.lista_arqueros.append(obj_arquero)
+                Arquero.dic_arqueros[obj_arquero.dni] = obj_arquero
                 Persona.lista_dni_personas.append(obj_arquero.dni)
         archivo_arqueros.close()
     except:
@@ -398,6 +401,7 @@ def leer_jugadorescampo():
                 dato_jugadorcampo = jugadorcampo.split(',')
                 dato_jugadorcampo[14] = dato_jugadorcampo[14].rstrip("\n")
                 obj_jugadorcampo = JugadorDeCampo(dato_jugadorcampo[0],dato_jugadorcampo[1],dato_jugadorcampo[2],dato_jugadorcampo[3],dato_jugadorcampo[4],dato_jugadorcampo[5],dato_jugadorcampo[6],dato_jugadorcampo[7],dato_jugadorcampo[8],dato_jugadorcampo[9],dato_jugadorcampo[10],dato_jugadorcampo[11],dato_jugadorcampo[12],dato_jugadorcampo[13],dato_jugadorcampo[14])
+                JugadorDeCampo.dic_jugadorescampo[obj_jugadorcampo.dni] = obj_jugadorcampo
                 Persona.lista_dni_personas.append(obj_jugadorcampo.dni)
         archivo_jugadorescampo.close()
     except:
@@ -482,65 +486,98 @@ def menu_principal():
                 print("No hay ninguna liga creada. Primero vaya a crear una.")
             else:
                 nombre = str(input("Ingrese el nombre del club que desea agregar: "))
-                try:
-                    id = int(input("Ingrese un ID para el club (nro. o nros. enteros): "))
-                    while id in Club.dic_clubes.keys(): 
-                        id = int(input("El ID ingresado ya existe para otro club. Ingrese otro ID para el club: "))
-                except: 
-                    print("Ingreso erroneamente el id.")
-                for key,value in Liga.dic_ligas.items():
-                    print(key,"--->",value)
+                id_ok = False
+                while id_ok == False:
+                    try:
+                        id = int(input("Ingrese un ID para el club (nro. o nros. enteros): "))
+                        while id in Club.dic_clubes.keys(): 
+                            id = int(input("El ID ingresado ya existe para otro club. Ingrese otro ID para el club: "))
+                        id_ok = True
+                    except: 
+                        print("Ingreso erroneamente el id.")
+                for key, in Liga.dic_ligas.items():
+                    print(key,"--->",Liga.dic_ligas.get(key).nombre)
                 liga = str(input("Elija la liga a la que va a agregar el club. Las ligas disponibles son las siguientes: "))
                 while liga not in Liga.lista_nombre_ligas:
                     liga = str(input("La liga ingresada no existe. Elija una de la lista que se le presentó: "))
-                presupuesto = int(input("Ingrese el presupuesto actual del club (ingrese solamente nros. a menos que sea un nro. decimal): "))
-                presupuesto = validar_presupuesto(presupuesto)
+                presu_ok = False
+                while presu_ok == False:
+                    try:
+                        presupuesto = int(input("Ingrese el presupuesto actual del club (ingrese solamente nros. a menos que sea un nro. decimal): "))
+                        presupuesto = validar_presupuesto(presupuesto)
+                        presu_ok = True
+                    except:
+                        print("Ingreso erroneamente el presupuesto.")
                 club = Club(nombre,id,liga,presupuesto)    
-                Club.lista_clubes.append(club)
-                for i in range(len(Liga.lista_ligas)):
-                    if club.liga == Liga.lista_ligas[i].nombre:
-                        Liga.lista_ligas[i].lista_clubes.append(club)
-                        Liga.lista_ligas[i].cant_clubes+=1
+                Club.dic_clubes[id] = club
+                for key in Liga.dic_ligas.items():
+                    if club.liga == Liga.dic_ligas.get(key).nombre:
+                        Liga.dic_ligas.get(key).lista_clubes.append(club)
+                        Liga.dic_ligas.get(key).cant_clubes+=1
                 guardar_archivos()
         
         elif guardo == 3:
-            if len(Club.lista_clubes) == 0:
+            if len(Club.dic_clubes) == 0:
                 print("No hay ningun club creado. Primero vaya a crear uno.")
             else: 
                 nombre = str(input("Ingrese el nombre del jugador que desea agregar: "))
                 apellido = str(input("Ingrese el apellido del jugador que desea agregar: "))
-                dni = int(input("Ingrese el DNI del jugador: "))
-                dni = validar_longitud_dni(dni)
-                while dni in Persona.lista_dni_personas: 
-                    dni = int(input("El DNI ingresado ya existe para otro jugador. Intente de nuevo: "))
-                    dni = validar_longitud_dni(dni)
+                dni_ok = False
+                while dni_ok == False:
+                    try:
+                        dni = int(input("Ingrese el DNI del jugador: "))
+                        dni = validar_longitud_dni(dni)
+                        while dni in Persona.lista_dni_personas: 
+                            dni = int(input("El DNI ingresado ya existe para otro jugador. Intente de nuevo: "))
+                            dni = validar_longitud_dni(dni)
+                        dni_ok = True
+                    except:
+                        print("Ingreso erroneamente el dni.")
                 Persona.lista_dni_personas.append(dni)
                 fecha_nacimiento = input("Ingrese la fecha de nacimiento del jugador en formato dd/mm/aaaa: ")
                 fecha_nacimiento = validar_fecha_nacimiento(fecha_nacimiento) 
                 edad = calcular_edad(fecha_nacimiento)
                 nacionalidad = input("Ingrese la nacionalidad del jugador: ")
-                estatura = float(input("Ingrese la estatura (en metros) del jugador: "))
-                estatura = validar_estatura(estatura)
-                peso = float(input("Ingrese el peso (en kilogramos) del jugador: "))
-                peso = validar_peso(peso)
-                valor = int(input("Ingrese el valor del jugador: "))
-                valor = validar_valor(valor)
-                for i in range(len(Club.lista_clubes)):
-                    print(Club.lista_clubes[i].id, Club.lista_clubes[i].nombre)
-                idclub = int(input("Ingrese el ID del club al que desea agregar al jugador. Los clubes con sus respectivos IDs son los siguientes: "))
-                while idclub not in Club.lista_id_clubes:
-                    idclub = int(input("El ID club ingresado no corresponde a ningún club existente. Elija una de las opciones que se le mostraron: "))
-                for i in range(len(Club.lista_clubes)):
-                    if idclub == Club.lista_clubes[i].id:
-                        club == Club.lista_clubes[i].nombre
+                valor_ok = False
+                while valor_ok == False:
+                    try: 
+                        estatura = float(input("Ingrese la estatura (en metros) del jugador: "))
+                        estatura = validar_estatura(estatura)
+                        peso = float(input("Ingrese el peso (en kilogramos) del jugador: "))
+                        peso = validar_peso(peso)
+                        valor = int(input("Ingrese el valor del jugador: "))
+                        valor = validar_valor(valor)
+                        valor_ok = True
+                    except:
+                        print("Ingreso erroneamente el dato.")
+                for key in Club.dic_clubes:
+                    print(key,"--->",Club.dic_clubes.get(key).nombre)
+                idclub_ok = False
+                while idclub_ok == False:
+                    try:
+                        idclub = int(input("Ingrese el ID del club al que desea agregar al jugador. Los clubes con sus respectivos IDs son los siguientes: "))
+                        while idclub not in Club.dic_clubes.keys():
+                            idclub = int(input("El ID club ingresado no corresponde a ningún club existente. Elija una de las opciones que se le mostraron: "))
+                        idclub_ok = True
+                    except:
+                        print("Ingreso erroneamente el id del club.")
+                for key in Club.dic_clubes.items():
+                    if idclub == key:
+                        club == Club.dic_clubes.get(key).nombre
                 estado = input("Ingrese el estado físico del jugador ('Activo' o 'Lesionado'): ")
                 estado = validar_estado(estado)
-                cantidad_tarjetas = int(input("Ingrese la cantidad de tarjetas que recibió el jugador: "))
-                cantidad_tarjetas = validar_cantidad_tarjetas(cantidad_tarjetas)
+                tarjetas_ok = False
+                while tarjetas_ok == False:
+                    try:
+                        cantidad_tarjetas = int(input("Ingrese la cantidad de tarjetas que recibió el jugador: "))
+                        cantidad_tarjetas = validar_cantidad_tarjetas(cantidad_tarjetas)
+                        tarjetas_ok = True
+                    except:
+                        print("Ingreso erroneamente la cantidad de tarjetas.")
                 posicion_valida = "no"
                 while posicion_valida == "no":
                     try:
-                        posicion = (input("En qué posición juega? Ingrese sólo el nro. correspondiente a la posición (1. Arquero o 2. Jugador de campo): "))
+                        posicion = int(input("En qué posición juega? Ingrese sólo el nro. correspondiente a la posición (1. Arquero o 2. Jugador de campo): "))
                         while posicion != 1 and posicion != 2:
                             posicion = int(input("Ingresó un nro. que no corresponde a una posición. Intente de nuevo: "))
                         posicion_valida = "si"
@@ -548,32 +585,44 @@ def menu_principal():
                         print("Debe ingresar un nro, lea bien lo que le pide.")
                 if posicion == 1:
                     posicion = "Arquero"
-                    vallas_invictas = int(input("Ingrese la cantidad de vallas invictas que tiene el arquero: "))
-                    vallas_invictas = validar_vallas_invictas(vallas_invictas)
-                    goles_recibidos = int(input("Ingrese la cantidad de goles que recibio el arquero: "))
-                    goles_recibidos = validar_goles_recibidos(goles_recibidos)
+                    datos_ok = False
+                    while datos_ok == False:
+                        try:
+                            vallas_invictas = int(input("Ingrese la cantidad de vallas invictas que tiene el arquero: "))
+                            vallas_invictas = validar_vallas_invictas(vallas_invictas)
+                            goles_recibidos = int(input("Ingrese la cantidad de goles que recibio el arquero: "))
+                            goles_recibidos = validar_goles_recibidos(goles_recibidos)
+                            datos_ok = True
+                        except:
+                            print("Ingrese erroneamente el dato.")
                     arquero=Arquero(nombre,apellido,dni,edad,nacionalidad,estatura,peso,valor,club,estado,cantidad_tarjetas, posicion, vallas_invictas, goles_recibidos)
-                    Arquero.lista_arqueros.append(arquero)
-                    for i in range(len(Club.lista_clubes)):
-                        if arquero.club == Club.lista_clubes[i].nombre:
-                            Club.lista_clubes[i].lista_jugadores.append(arquero)
+                    Arquero.dic_arqueros[dni] = arquero
+                    for key in Club.dic_clubes.items():
+                        if arquero.club == Club.dic_clubes.get(key).nombre:
+                            Club.dic_clubes.get(key).lista_jugadores.append(arquero)
                     guardar_archivos()
 
                 else: 
                     posicion = "Jugador de campo"
-                    goles= int(input("Ingrese la cantidad de goles que marcó el jugador: "))
-                    goles = validar_goles(goles)
-                    asistencias = int(input("Ingrese la cantidad de asistencias que hizo el jugador: "))
-                    asistencias = validar_asistencia(asistencias)
+                    datos_ok = False
+                    while datos_ok == False:
+                        try:
+                            goles= int(input("Ingrese la cantidad de goles que marcó el jugador: "))
+                            goles = validar_goles(goles)
+                            asistencias = int(input("Ingrese la cantidad de asistencias que hizo el jugador: "))
+                            asistencias = validar_asistencia(asistencias)
+                            datos_ok = True
+                        except:
+                            print("Ingreso erroneamente el dato.")
                     jugador_de_campo = JugadorDeCampo(nombre,apellido,dni,edad,nacionalidad,estatura,peso,valor,club,estado,cantidad_tarjetas, posicion, goles, asistencias)
-                    JugadorDeCampo.lista_jugadorescampo.append(jugador_de_campo)
-                    for i in range(len(Club.lista_clubes)):
-                        if jugador_de_campo.club == Club.lista_clubes[i].nombre:
-                            Club.lista_clubes[i].lista_jugadores.append(jugador_de_campo)
+                    JugadorDeCampo.dic_jugadorescampo[dni] = jugador_de_campo
+                    for key in Club.dic_clubes.items():
+                        if jugador_de_campo.club == Club.dic_clubes.get(key).nombre:
+                            Club.dic_clubes.get(key).lista_jugadores.append(jugador_de_campo)
                     guardar_archivos()
         
         elif guardo == 4:
-            if len(Club.lista_clubes) == 0:
+            if len(Club.dic_clubes) == 0:
                 print("No hay ningun club creado. Primero vaya a crear uno.")
             else:
                 try:
@@ -635,7 +684,7 @@ def menu_principal():
                 guardar_archivos()
        
         elif guardo == 6:
-            if len(Liga.lista_nombre_ligas) == 0:
+            if len(Liga.dic_ligas) == 0:
                 print("No hay ninguna liga creada. Primero vaya a crear una.")
             else:
                 liga = elegir_liga()
@@ -650,14 +699,14 @@ def menu_principal():
                 guardar_archivos()
 
         elif guardo == 7:
-            if len(Liga.lista_nombre_ligas) == 0:
+            if len(Liga.dic_ligas) == 0:
                 print("No hay ninguna liga creada. Primero vaya a crear una.")
             else:
                 liga = elegir_liga()
                 print(liga)
 
         elif guardo == 8:
-            if len(Club.lista_clubes) == 0:
+            if len(Club.dic_clubes) == 0:
                 print("No hay ningun club creado. Primero vaya a crear uno.")
             else:
                 liga = elegir_liga()

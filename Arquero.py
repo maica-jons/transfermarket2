@@ -1,7 +1,9 @@
 from Jugador import Jugador
 
 class Arquero(Jugador):
-    lista_arqueros = []
+
+    dic_arqueros = dict()
+
     def __init__(self, nombre, apellido, dni, edad, nacionalidad, estatura, peso, valor, club, estado, cantidad_tarjetas, posicion, vallas_invictas, goles_recibidos):
         Jugador.__init__(self, nombre, apellido, dni, edad, nacionalidad, estatura, peso, valor, club, estado, cantidad_tarjetas, posicion)
         self.vallas_invictas = vallas_invictas

@@ -1,6 +1,5 @@
 class Persona():
 
-    lista_personas = []
     lista_dni_personas = []
 
     def __init__(self, nombre, apellido, dni, edad, nacionalidad, estatura, peso):  
