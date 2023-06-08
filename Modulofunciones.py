@@ -1,4 +1,3 @@
-from Persona import Persona
 from Jugador import Jugador
 from Arquero import Arquero
 from JugadorDeCampo import JugadorDeCampo
@@ -382,7 +381,7 @@ def leer_arqueros():
                 datos_arquero[14] = datos_arquero[14].rstrip("\n")
                 obj_arquero = Arquero(datos_arquero[0],datos_arquero[1],datos_arquero[2],datos_arquero[3],datos_arquero[4],datos_arquero[5],datos_arquero[6],datos_arquero[7],datos_arquero[8],datos_arquero[9],datos_arquero[10],datos_arquero[11],datos_arquero[12],datos_arquero[13],datos_arquero[14])
                 Arquero.dic_arqueros[obj_arquero.dni] = obj_arquero
-                Persona.lista_dni_personas.append(obj_arquero.dni)
+                Jugador.lista_dni_personas.append(obj_arquero.dni)
         archivo_arqueros.close()
     except:
         print("")
@@ -402,7 +401,7 @@ def leer_jugadorescampo():
                 dato_jugadorcampo[14] = dato_jugadorcampo[14].rstrip("\n")
                 obj_jugadorcampo = JugadorDeCampo(dato_jugadorcampo[0],dato_jugadorcampo[1],dato_jugadorcampo[2],dato_jugadorcampo[3],dato_jugadorcampo[4],dato_jugadorcampo[5],dato_jugadorcampo[6],dato_jugadorcampo[7],dato_jugadorcampo[8],dato_jugadorcampo[9],dato_jugadorcampo[10],dato_jugadorcampo[11],dato_jugadorcampo[12],dato_jugadorcampo[13],dato_jugadorcampo[14])
                 JugadorDeCampo.dic_jugadorescampo[obj_jugadorcampo.dni] = obj_jugadorcampo
-                Persona.lista_dni_personas.append(obj_jugadorcampo.dni)
+                Jugador.lista_dni_personas.append(obj_jugadorcampo.dni)
         archivo_jugadorescampo.close()
     except:
         print("")
@@ -527,13 +526,13 @@ def menu_principal():
                     try:
                         dni = int(input("Ingrese el DNI del jugador: "))
                         dni = validar_longitud_dni(dni)
-                        while dni in Persona.lista_dni_personas: 
+                        while dni in Jugador.lista_dni_personas: 
                             dni = int(input("El DNI ingresado ya existe para otro jugador. Intente de nuevo: "))
                             dni = validar_longitud_dni(dni)
                         dni_ok = True
                     except:
                         print("Ingreso erroneamente el dni.")
-                Persona.lista_dni_personas.append(dni)
+                Jugador.lista_dni_personas.append(dni)
                 fecha_nacimiento = input("Ingrese la fecha de nacimiento del jugador en formato dd/mm/aaaa: ")
                 fecha_nacimiento = validar_fecha_nacimiento(fecha_nacimiento) 
                 edad = calcular_edad(fecha_nacimiento)
@@ -652,7 +651,7 @@ def menu_principal():
                 guardar_archivos()
         
         elif guardo == 5:
-            if len(Persona.lista_dni_personas) == 0:
+            if len(Jugador.lista_dni_personas) == 0:
                 print("No hay ningun jugador creado. Primero vaya a crear uno.")
             else:
                 print("Primero elija el jugador a modificar.")
@@ -714,7 +713,7 @@ def menu_principal():
                 print(club)
 
         elif guardo == 9:
-            if len(Persona.lista_dni_personas) == 0:
+            if len(Jugador.lista_dni_personas) == 0:
                 print("No hay ningun jugador creado. Primero vaya a crear uno.")
             else:
                 liga = elegir_liga()

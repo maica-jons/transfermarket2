@@ -1,12 +1,9 @@
-from Persona import Persona
-
-class Usuario(Persona):
+class Usuario():
 
     dic_usuarios = dict()
     lista_mail = []
 
-    def __init__(self, nom_usuario, contra, nombre, apellido, dni, mail):
-        Persona.__init__(self, nombre, apellido, dni)  
+    def __init__(self, nom_usuario, contra, nombre, apellido, dni, mail): 
         self.nom_usuario = nom_usuario
         self.contra = contra
         self.nombre = nombre

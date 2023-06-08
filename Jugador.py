@@ -1,9 +1,15 @@
-from Persona import Persona
+class Jugador():
 
-class Jugador(Persona):
+    lista_dni_personas = []
 
     def __init__(self, nombre, apellido, dni, edad, nacionalidad, estatura, peso, valor, club, estado, cantidad_tarjetas, posicion):
-        Persona.__init__(self, nombre, apellido, dni, edad, nacionalidad, estatura, peso)
+        self.nombre = nombre
+        self.apellido = apellido
+        self.dni = dni
+        self.edad = edad
+        self.nacionalidad = nacionalidad
+        self.estatura = estatura
+        self.peso = peso
         self.valor = valor
         self.club = club
         self.estado = estado   # (Estado físico)
