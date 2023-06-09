@@ -1,15 +1,10 @@
-from Liga import *
+from Usuario import *
 
-dic_liga=dict()
-liam = Liga("liga","Arg")
-dic_liga['Arg'] = liam
+dic_usu=dict()
+liam = Usuario("limson","1234","liam","mac gaw",44447670,"lmg")
+dic_usu['limson'] = liam
 
-print("Ligas:")
-for key in dic_liga.keys():
-    print(key,"--->",dic_liga.get(key).nombre)
+print("usuarios:")
+for key in dic_usu.keys():
+    print(key,"--->",dic_usu.get(key).nom_usuario)
 
-dic_liga.pop("Arg")
-
-print("Ligas:")
-for key in dic_liga.keys():
-    print(key,"--->",dic_liga.get(key).nombre)

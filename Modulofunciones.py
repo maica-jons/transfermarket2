@@ -228,12 +228,12 @@ def elegir_club(liga):
     Retorna:
     - club (Club): Instancia de la clase Club correspondiente al club seleccionado por el usuario.
     """
-    for key in liga.dic_clubes.items():
+    for key in liga.dic_clubes.keys():
         print(key, "--->", liga.dic_clubes.get(key).nombre)
     esta = "No"
     while esta == "No":
         idclub = int(input("Ingrese el id del club de los que están disponibles: "))
-        for key in liga.dic_clubes.items():
+        for key in liga.dic_clubes.keys():
             if idclub == key:
                 esta = "Sí"
     club = liga.dic_clubes.get(idclub)
@@ -250,12 +250,12 @@ def elegir_jugador(club):
     Retorna:
     - jugador (Jugador): Instancia de la clase Jugador correspondiente al jugador seleccionado por el usuario.
     """
-    for key in club.dic_jugadores.items():
+    for key in club.dic_jugadores.keys():
         print(key, "--->", club.dic_jugadores.get(key).nombre, club.dic_jugadores.get(key).apellido)   
     esta = "No"
     while esta == "No":
         dni = int(input("Ingrese el dni del jugador de los que están disponibles: "))
-        for key in club.dic_jugadores.items():
+        for key in club.dic_jugadores.keys():
             if dni == key:
                 esta = "Sí"
     jugador = club.dic_jugadores.get(dni)
@@ -269,7 +269,7 @@ def guardar_usuario():
     con el formato "nom_usuario,contra,nombre,apellido,dni,mail". Finalmente, cierra el archivo.
     """
     with open('./usuarios.txt','w') as archivo_usuarios:
-        for key in Usuario.dic_usuarios.items():
+        for key in Usuario.dic_usuarios.keys():
             usuario = Usuario.dic_usuarios.get(key)
             archivo_usuarios.write(f"{usuario.nom_usuario},{usuario.contra},{usuario.nombre},{usuario.apellido},{usuario.dni},{usuario.mail}\n")
     archivo_usuarios.close()
@@ -305,16 +305,16 @@ def guardar_archivos():
         with open('./clubes.txt','w') as archivo_clubes:
             with open('./arqueros.txt','w') as archivo_arqueros:
                 with open('./jugadorescampo.txt','w') as archivo_jugadorescampo:
-                    for key in Liga.dic_ligas.items():
+                    for key in Liga.dic_ligas.keys():
                         liga = Liga.dic_ligas.get(key)
                         archivo_ligas.write(f"{liga.nombre},{liga.pais},{liga.dic_clubes},{liga.cant_clubes}\n")
-                    for key in Club.dic_clubes.items():
+                    for key in Club.dic_clubes.keys():
                         club = Club.dic_clubes.get(key)
                         archivo_clubes.write(f"{club.nombre},{club.id},{club.liga},{club.presupuesto},{club.valor_del_club},{club.dic_jugadores}\n")
-                    for key in Arquero.dic_arqueros.items():
+                    for key in Arquero.dic_arqueros.keys():
                         arquero = Arquero.dic_arqueros.get(key)
                         archivo_arqueros.write(f"{arquero.nombre},{arquero.apellido},{arquero.dni},{arquero.edad},{arquero.nacionalidad},{arquero.estatura},{arquero.peso},{arquero.valor},{arquero.club},{arquero.estado},{arquero.cantidad_tarjetas},{arquero.posicion},{arquero.vallas_invictas},{arquero.goles_recibidos}\n")
-                    for key in JugadorDeCampo.dic_jugadorescampo.items():
+                    for key in JugadorDeCampo.dic_jugadorescampo.keys():
                         jugadorcampo = JugadorDeCampo.dic_jugadorescampo.get(key)
                         archivo_jugadorescampo.write(f"{jugadorcampo.nombre},{jugadorcampo.apellido},{jugadorcampo.dni},{jugadorcampo.edad},{jugadorcampo.nacionalidad},{jugadorcampo.estatura},{jugadorcampo.peso},{jugadorcampo.valor},{jugadorcampo.club},{jugadorcampo.estado},{jugadorcampo.cantidad_tarjetas},{jugadorcampo.posicion},{jugadorcampo.goles},{jugadorcampo.asistencias}\n")
     archivo_ligas.close()
@@ -490,7 +490,7 @@ def menu_principal():
                         id_ok = True
                     except: 
                         print("Ingreso erroneamente el id.")
-                for key, in Liga.dic_ligas.items():
+                for key, in Liga.dic_ligas.keys():
                     print(key,"--->",Liga.dic_ligas.get(key).nombre)
                 liga = str(input("Elija la liga a la que va a agregar el club. Las ligas disponibles son las siguientes: "))
                 while liga not in Liga.lista_nombre_ligas:
@@ -505,7 +505,7 @@ def menu_principal():
                         print("Ingreso erroneamente el presupuesto.")
                 club = Club(nombre,id,liga,presupuesto)    
                 Club.dic_clubes[id] = club
-                for key in Liga.dic_ligas.items():
+                for key in Liga.dic_ligas.keys():
                     if club.liga == Liga.dic_ligas.get(key).nombre:
                         Liga.dic_ligas.get(key).dic_clubes[id] = club
                         Liga.dic_ligas.get(key).cant_clubes+=1
@@ -556,7 +556,7 @@ def menu_principal():
                         idclub_ok = True
                     except:
                         print("Ingreso erroneamente el id del club.")
-                for key in Club.dic_clubes.items():
+                for key in Club.dic_clubes.keys():
                     if idclub == key:
                         club == Club.dic_clubes.get(key).nombre
                 estado = input("Ingrese el estado físico del jugador ('Activo' o 'Lesionado'): ")
@@ -592,7 +592,7 @@ def menu_principal():
                             print("Ingrese erroneamente el dato.")
                     arquero=Arquero(nombre,apellido,dni,edad,nacionalidad,estatura,peso,valor,club,estado,cantidad_tarjetas, posicion, vallas_invictas, goles_recibidos)
                     Arquero.dic_arqueros[dni] = arquero
-                    for key in Club.dic_clubes.items():
+                    for key in Club.dic_clubes.keys():
                         if arquero.club == Club.dic_clubes.get(key).nombre:
                             Club.dic_clubes.get(key).dic_jugadores[dni] = arquero
                     guardar_archivos()
@@ -611,7 +611,7 @@ def menu_principal():
                             print("Ingreso erroneamente el dato.")
                     jugador_de_campo = JugadorDeCampo(nombre,apellido,dni,edad,nacionalidad,estatura,peso,valor,club,estado,cantidad_tarjetas, posicion, goles, asistencias)
                     JugadorDeCampo.dic_jugadorescampo[dni] = jugador_de_campo
-                    for key in Club.dic_clubes.items():
+                    for key in Club.dic_clubes.keys():
                         if jugador_de_campo.club == Club.dic_clubes.get(key).nombre:
                             Club.dic_clubes.get(key).dic_jugadores[dni] = jugador_de_campo
                     guardar_archivos()
