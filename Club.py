@@ -20,10 +20,10 @@ class Club():
             None
         """
         if jugador.valor <= self.presupuesto:
-            club_vendedor.lista_jugadores.remove(jugador)
+            club_vendedor.dic_jugadores.pop(jugador.dni)
             club_vendedor.presupuesto += jugador.valor
             club_vendedor.valor_del_club -= jugador.valor
-            self.lista_jugadores.append(jugador)
+            self.dic_jugadores[jugador.dni] = jugador
             jugador.club = self.nombre
             self.presupuesto -= jugador.valor
             self.valor_del_club += jugador.valor
@@ -48,15 +48,15 @@ class Club():
         Retorna:
         arquero (Jugador): Objeto Jugador del arquero que ha mantenido su valla invicta.
         """
-        for i in range(len(self.lista_jugadores)):
-            if self.lista_jugadores[i].posicion == "Arquero":
-                print(self.lista_jugadores[i].dni, self.lista_jugadores[i].nombre, self.lista_jugadores[i].apellido)
+        for key in self.dic_jugadores.items():
+            if self.dic_jugadores.get(key).posicion == "Arquero":
+                print(key, "--->" , self.dic_jugadores.get(key).nombre, self.dic_jugadores.get(key).apellido)
         esta_a = "No"
         while esta_a == "No":   
-            arquero= int(input("Ingrese el dni del arquero que no recibió goles: "))
-            for i in range(len(self.lista_jugadores)):
-                if arquero == self.lista_jugadores[i].dni:
-                    arquero = self.lista_jugadores[i]
+            dni= int(input("Ingrese el dni del arquero que no recibió goles: "))
+            for key in self.dic_jugadores.items():
+                if dni == key:
+                    arquero = self.dic_jugadores.get(dni)
                     arquero.tener_valla_invicta()
                     esta_a = "Sí"
             if esta_a == "No":
@@ -69,15 +69,15 @@ class Club():
         Retorna:
         arquero (Jugador): Objeto Jugador del arquero que ha recibido un gol.
         """
-        for i in range(len(self.lista_jugadores)):
-            if self.lista_jugadores[i].posicion == "Arquero":
-                print(self.lista_jugadores[i].dni, self.lista_jugadores[i].nombre, self.lista_jugadores[i].apellido)
+        for key in self.dic_jugadores.items():
+            if self.dic_jugadores.get(key).posicion == "Arquero":
+                print(key, "--->" , self.dic_jugadores.get(key).nombre, self.dic_jugadores.get(key).apellido)
         esta_a="No"
         while esta_a == "No":   
-            arquero = int(input("Ingrese el dni del arquero al que le metieron gol: "))
-            for i in range(len(self.lista_jugadores)):
-                if arquero == self.lista_jugadores[i].dni:
-                    arquero = self.lista_jugadores[i]
+            dni= int(input("Ingrese el dni del arquero que no recibió goles: "))
+            for key in self.dic_jugadores.items():
+                if dni == key:
+                    arquero = self.dic_jugadores.get(dni)
                     arquero.recibir_gol()
                     esta_a = "Sí"
             if esta_a == "No":
@@ -90,14 +90,14 @@ class Club():
         Retorna:
         goleador (Jugador): Objeto Jugador del jugador que ha metido un gol.
         """
-        for i in range(len(self.lista_jugadores)):
-            print(self.lista_jugadores[i].dni, self.lista_jugadores[i].nombre, self.lista_jugadores[i].apellido)
+        for key in self.dic_jugadores.items():
+            print(key, "--->" , self.dic_jugadores.get(key).nombre, self.dic_jugadores.get(key).apellido)
         esta_g = "No"
         while esta_g == "No":
-            goleador = int(input("Ingrese el dni del jugador que metió gol: "))
-            for i in range(len(self.lista_jugadores)):
-                if goleador == self.lista_jugadores[i].dni:
-                    goleador = self.lista_jugadores[i]
+            dni = int(input("Ingrese el dni del jugador que metió gol: "))
+            for key in self.dic_jugadores.items():
+                if dni == key:
+                    goleador = self.dic_jugadores.get(dni)
                     goleador.hacer_gol()
                     esta_g = "Sí"
             if esta_g == "No":
@@ -110,14 +110,14 @@ class Club():
         Retorna:
             asistidor (Jugador): Objeto Jugador del jugador que ha dado la asistencia.
         """
-        for i in range(len(self.lista_jugadores)):
-            print(self.lista_jugadores[i].dni, self.lista_jugadores[i].nombre, self.lista_jugadores[i].apellido)
+        for key in self.dic_jugadores.items():
+            print(key, "--->" , self.dic_jugadores.get(key).nombre, self.dic_jugadores.get(key).apellido)
         esta_as = "No"
         while esta_as == "No":
-            asistidor = int(input("Ingrese el dni del jugador que dió la asistencia: "))
-            for i in range(len(self.lista_jugadores)):
-                if asistidor == self.lista_jugadores[i].dni:
-                    asistidor = self.lista_jugadores[i]
+            dni = int(input("Ingrese el dni del jugador que metió gol: "))
+            for key in self.dic_jugadores.items():
+                if dni == key:
+                    asistidor = self.dic_jugadores.get(dni)
                     asistidor.dar_asistencia()
                     esta_as = "Sí"
             if esta_as == "No":
@@ -130,14 +130,14 @@ class Club():
         Returns:
             jugador (Jugador): Objeto Jugador del jugador al que se le ha sacado la tarjeta. 
         """
-        for i in range(len(self.lista_jugadores)):
-            print(self.lista_jugadores[i].dni, self.lista_jugadores[i].nombre, self.lista_jugadores[i].apellido)
+        for key in self.dic_jugadores.items():
+            print(key, "--->" , self.dic_jugadores.get(key).nombre, self.dic_jugadores.get(key).apellido)
         esta_j = "No"
         while esta_j == "No":
-            jugador = int(input("Ingrese el dni del jugador al que le sacaron alguna tarjeta: "))
-            for i in range(len(self.lista_jugadores)):
-                if jugador == self.lista_jugadores[i].dni:
-                    jugador = self.lista_jugadores[i]
+            dni = int(input("Ingrese el dni del jugador que metió gol: "))
+            for key in self.dic_jugadores.items():
+                if dni == key:
+                    jugador = self.dic_jugadores.get(dni)
                     jugador.cantidad_tarjetas += 1
                     esta_j = "Sí"
             if esta_j == "No":
@@ -145,4 +145,4 @@ class Club():
         return jugador
 
     def __str__(self):
-        return("El nombre del club es {}, cuyo ID es {}. El nombre de la liga a la que pertenece es {}, tiene {} de presupuesto y {} de valor. La lista de los jugadores que tiene el club es {}").format(self.nombre, self.id, self.liga, self.presupuesto, self.valor_del_club, self.lista_jugadores)
+        return("El nombre del club es {}, cuyo ID es {}. El nombre de la liga a la que pertenece es {}, tiene {} de presupuesto y {} de valor. La lista de los jugadores que tiene el club es {}").format(self.nombre, self.id, self.liga, self.presupuesto, self.valor_del_club, self.dic_jugadores)

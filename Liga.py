@@ -86,4 +86,4 @@ class Liga():
         print("Partido terminado!")
         
     def __str__(self):
-        return("La liga del país '{}' se llama '{}' y está conformada por los siguientes {} clubes: {}").format(self.pais, self.nombre, self.cant_clubes, self.lista_clubes)
+        return("La liga del país '{}' se llama '{}' y está conformada por los siguientes {} clubes: {}").format(self.pais, self.nombre, self.cant_clubes, self.dic_clubes)

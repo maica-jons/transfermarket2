@@ -307,10 +307,10 @@ def guardar_archivos():
                 with open('./jugadorescampo.txt','w') as archivo_jugadorescampo:
                     for key in Liga.dic_ligas.items():
                         liga = Liga.dic_ligas.get(key)
-                        archivo_ligas.write(f"{liga.nombre},{liga.pais},{liga.lista_clubes},{liga.cant_clubes}\n")
+                        archivo_ligas.write(f"{liga.nombre},{liga.pais},{liga.dic_clubes},{liga.cant_clubes}\n")
                     for key in Club.dic_clubes.items():
                         club = Club.dic_clubes.get(key)
-                        archivo_clubes.write(f"{club.nombre},{club.id},{club.liga},{club.presupuesto},{club.valor_del_club},{club.lista_jugadores}\n")
+                        archivo_clubes.write(f"{club.nombre},{club.id},{club.liga},{club.presupuesto},{club.valor_del_club},{club.dic_jugadores}\n")
                     for key in Arquero.dic_arqueros.items():
                         arquero = Arquero.dic_arqueros.get(key)
                         archivo_arqueros.write(f"{arquero.nombre},{arquero.apellido},{arquero.dni},{arquero.edad},{arquero.nacionalidad},{arquero.estatura},{arquero.peso},{arquero.valor},{arquero.club},{arquero.estado},{arquero.cantidad_tarjetas},{arquero.posicion},{arquero.vallas_invictas},{arquero.goles_recibidos}\n")
@@ -683,7 +683,7 @@ def menu_principal():
                 print("No hay ninguna liga creada. Primero vaya a crear una.")
             else:
                 liga = elegir_liga()
-                if len(liga.lista_clubes) < 2:
+                if len(liga.dic_clubes) < 2:
                     print("Se necesita al menos 2 clubes en la misma liga para jugar un partido. Vaya a crearlos.")
                 else:
                     print("Elija el club local que jugará el partido.")
