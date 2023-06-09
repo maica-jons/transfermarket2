@@ -490,7 +490,7 @@ def menu_principal():
                         id_ok = True
                     except: 
                         print("Ingreso erroneamente el id.")
-                for key, in Liga.dic_ligas.keys():
+                for key in Liga.dic_ligas.keys():
                     print(key,"--->",Liga.dic_ligas.get(key).nombre)
                 liga = str(input("Elija la liga a la que va a agregar el club. Las ligas disponibles son las siguientes: "))
                 while liga not in Liga.lista_nombre_ligas:
