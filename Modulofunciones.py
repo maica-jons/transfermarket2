@@ -232,10 +232,13 @@ def elegir_club(liga):
         print(key, "--->", liga.dic_clubes.get(key).nombre)
     esta = "No"
     while esta == "No":
-        idclub = int(input("Ingrese el id del club de los que están disponibles: "))
-        for key in liga.dic_clubes.keys():
-            if idclub == key:
-                esta = "Sí"
+        try:
+            idclub = int(input("Ingrese el id del club de los que están disponibles: "))
+            for key in liga.dic_clubes.keys():
+                if idclub == key:
+                    esta = "Sí"
+        except:
+            print("Ingreso erroneamente el id del club.")
     club = liga.dic_clubes.get(idclub)
     return club
 
@@ -254,10 +257,13 @@ def elegir_jugador(club):
         print(key, "--->", club.dic_jugadores.get(key).nombre, club.dic_jugadores.get(key).apellido)   
     esta = "No"
     while esta == "No":
-        dni = int(input("Ingrese el dni del jugador de los que están disponibles: "))
-        for key in club.dic_jugadores.keys():
-            if dni == key:
-                esta = "Sí"
+        try:
+            dni = int(input("Ingrese el dni del jugador de los que están disponibles: "))
+            for key in club.dic_jugadores.keys():
+                if dni == key:
+                    esta = "Sí"
+        except:
+            print("Ingreso erroneamente el dni.")
     jugador = club.dic_jugadores.get(dni)
     return jugador
 
@@ -411,8 +417,10 @@ def menu():
     y cerrar sesión (salir).
     El número ingresado por el usuario se devuelve como resultado de la función.
     """
-
-    menu=int(input("""Elija una opción del menú (Ingrese el número):
+    menu_ok = False
+    while menu_ok == False:
+        try:
+            menu=int(input("""Elija una opción del menú (Ingrese el número):
 1- Agregar Liga
 2- Agregar Club
 3- Agregar Jugador
@@ -425,6 +433,9 @@ def menu():
 10- Cerrar sesión (Salir)   
 
 """))
+            menu_ok = True
+        except:
+            print("Ingreso erroneamente la opcion.")
     return menu
 
 def menu_usuario():
@@ -533,18 +544,30 @@ def menu_principal():
                 fecha_nacimiento = validar_fecha_nacimiento(fecha_nacimiento) 
                 edad = calcular_edad(fecha_nacimiento)
                 nacionalidad = input("Ingrese la nacionalidad del jugador: ")
-                valor_ok = False
-                while valor_ok == False:
+                estatura_ok = False
+                while estatura_ok == False:
                     try: 
                         estatura = float(input("Ingrese la estatura (en metros) del jugador: "))
                         estatura = validar_estatura(estatura)
+                        estatura_ok = True
+                    except: 
+                        print("Ingreso erroneamente la estatura.")
+                peso_ok = False
+                while peso_ok == False:
+                    try:
                         peso = float(input("Ingrese el peso (en kilogramos) del jugador: "))
                         peso = validar_peso(peso)
+                        peso_ok = True
+                    except: 
+                        print("Ingreso erroneamente el peso.")
+                valor_ok = False
+                while valor_ok == False:
+                    try:
                         valor = int(input("Ingrese el valor del jugador: "))
                         valor = validar_valor(valor)
                         valor_ok = True
                     except:
-                        print("Ingreso erroneamente el dato.")
+                        print("Ingreso erroneamente el valor.")
                 for key in Club.dic_clubes:
                     print(key,"--->",Club.dic_clubes.get(key).nombre)
                 idclub_ok = False
@@ -580,16 +603,22 @@ def menu_principal():
                         print("Debe ingresar un nro, lea bien lo que le pide.")
                 if posicion == 1:
                     posicion = "Arquero"
-                    datos_ok = False
-                    while datos_ok == False:
+                    vallas_ok = False
+                    while vallas_ok == False:
                         try:
                             vallas_invictas = int(input("Ingrese la cantidad de vallas invictas que tiene el arquero: "))
                             vallas_invictas = validar_vallas_invictas(vallas_invictas)
+                            vallas_ok = True
+                        except:
+                            print("Ingreso erroneamente las vallas invictas.")
+                    goles_ok = False
+                    while goles_ok == False:
+                        try:
                             goles_recibidos = int(input("Ingrese la cantidad de goles que recibio el arquero: "))
                             goles_recibidos = validar_goles_recibidos(goles_recibidos)
-                            datos_ok = True
+                            goles_ok = True
                         except:
-                            print("Ingrese erroneamente el dato.")
+                            print("Ingrese erroneamente los goles recibidos.")
                     arquero=Arquero(nombre,apellido,dni,edad,nacionalidad,estatura,peso,valor,club,estado,cantidad_tarjetas, posicion, vallas_invictas, goles_recibidos)
                     Arquero.dic_arqueros[dni] = arquero
                     for key in Club.dic_clubes.keys():
@@ -599,16 +628,22 @@ def menu_principal():
 
                 else: 
                     posicion = "Jugador de campo"
-                    datos_ok = False
-                    while datos_ok == False:
+                    gol_ok = False
+                    while gol_ok == False:
                         try:
                             goles= int(input("Ingrese la cantidad de goles que marcó el jugador: "))
                             goles = validar_goles(goles)
+                            gol_ok = True
+                        except:
+                            print("Ingreso erroneamente los goles.")
+                    asistencia_ok = False
+                    while asistencia_ok == False:
+                        try:
                             asistencias = int(input("Ingrese la cantidad de asistencias que hizo el jugador: "))
                             asistencias = validar_asistencia(asistencias)
-                            datos_ok = True
+                            asistencia_ok = True
                         except:
-                            print("Ingreso erroneamente el dato.")
+                            print("Ingreso erroneamente las asistencias.")
                     jugador_de_campo = JugadorDeCampo(nombre,apellido,dni,edad,nacionalidad,estatura,peso,valor,club,estado,cantidad_tarjetas, posicion, goles, asistencias)
                     JugadorDeCampo.dic_jugadorescampo[dni] = jugador_de_campo
                     for key in Club.dic_clubes.keys():
