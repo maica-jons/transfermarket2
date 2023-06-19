@@ -31,11 +31,15 @@ def validar_fecha_nacimiento(fecha_nacimiento):
     Raises:
         ValueError: Si la fecha de nacimiento no está en el formato correcto.
     """
-    try:
-        datetime.datetime.strptime(fecha_nacimiento, '%d/%m/%Y')
-        return fecha_nacimiento
-    except ValueError:
-        raise ValueError("La fecha de nacimiento debe estar en formato dd/mm/aaaa")
+    fecha_ok = False
+    while fecha_ok == False:
+        try:
+            datetime.datetime.strptime(fecha_nacimiento, '%d/%m/%Y')
+            fecha_ok = True
+            return fecha_nacimiento
+        except:
+            print("La fecha de nacimiento debe estar en formato dd/mm/aaaa")
+            fecha_nacimiento = input("Ingrese la fecha de nacimiento del jugador en formato dd/mm/aaaa: ")
 
 def calcular_edad(fecha_nacimiento):
     """

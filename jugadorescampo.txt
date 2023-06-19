@@ -1,1 +1,0 @@
-lautaro,martinez,34343434,33,argentina,1.84,83.0,15000,milan,Activo,1,Jugador de campo,19,4
