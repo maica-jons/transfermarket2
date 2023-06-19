@@ -1,0 +1,2 @@
+milan,1,serie a,25000,15000,{34343434: <JugadorDeCampo.JugadorDeCampo object at 0x10c3c4bb0>}
+inter,2,serie a,55000,0,{}

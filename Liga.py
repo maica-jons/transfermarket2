@@ -3,11 +3,11 @@ class Liga():
     dic_ligas = dict() #Total de ligas
     lista_nombre_ligas = []
 
-    def __init__(self, nombre, pais, dic_clubes = dict(), cant_clubes = 0 ):
+    def __init__(self, nombre, pais, ):
         self.nombre = nombre
         self.pais = pais
-        self.dic_clubes = dic_clubes  #Clubes de cada liga
-        self.cant_clubes =  cant_clubes
+        self.dic_clubes = dict()  #Clubes de cada liga
+        self.cant_clubes =  len(self.dic_clubes)
 
 
     def jugar_partido(self, club1, club2): #Club1 es local y club2 es vistante
@@ -28,9 +28,15 @@ class Liga():
         while goles != "s" and goles != "n":
             goles = input("No ingreso una opcion valida. Ingrese 's' si HUBO goles y 'n' si NO HUBO goles: ")
         if goles == "s":
-            cant_goles = int(input("Cuántos goles totales hubo en el partido? "))
-            while cant_goles <=0:
-                cant_goles = int(input("El numero tiene que se mayor a 0. Cuantos goles totales hubo en el partido? "))
+            cantgol_ok = False
+            while cantgol_ok == False:
+                try:
+                    cant_goles = int(input("Cuántos goles totales hubo en el partido? "))
+                    while cant_goles <=0:
+                        cant_goles = int(input("El numero tiene que se mayor a 0. Cuantos goles totales hubo en el partido? "))
+                    cantgol_ok = True
+                except:
+                    print("Ingreso erroneamente el dato.")
             cont = 0
             cont_l = 0
             cont_v = 0
@@ -69,9 +75,15 @@ class Liga():
         while tarjetas != "s" and tarjetas != "n":
             tarjetas = input("No ingreso una opcion valida. Ingrese 's' si HUBO tarjetas y 'n' si NO HUBO tarjetas: ")
         if tarjetas == "s":
-            cant_tarjetas = int(input("Cuántas tarjetas totales hubo en el partido? "))
-            while cant_tarjetas <= 0:
-                cant_tarjetas = int(input("El numero tiene que se mayor a 0. Cuantas tarjetas totales hubo en el partido? "))
+            canttar_ok = False
+            while canttar_ok == False:
+                try:
+                    cant_tarjetas = int(input("Cuántas tarjetas totales hubo en el partido? "))
+                    while cant_tarjetas <= 0:
+                        cant_tarjetas = int(input("El numero tiene que se mayor a 0. Cuantas tarjetas totales hubo en el partido? "))
+                    canttar_ok = True
+                except:
+                    print("Ingreso erroneamente el dato.")
             cont_t = 0
             while cont_t < cant_tarjetas:
                 club_amonestado = input("Qué club recibio la tarjeta? Para local ingrese 'l', para visitante ingrese 'v': ")
@@ -87,3 +99,7 @@ class Liga():
         
     def __str__(self):
         return("La liga del país '{}' se llama '{}' y está conformada por los siguientes {} clubes: {}").format(self.pais, self.nombre, self.cant_clubes, self.dic_clubes)
+
+    def visualizar(self):
+        for key in self.dic_clubes.keys():
+            print(key, "--->", self.dic_clubes.get(key).nombre)

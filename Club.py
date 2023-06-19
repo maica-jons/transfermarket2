@@ -1,13 +1,13 @@
 class Club():
     dic_clubes = dict()
     
-    def __init__(self, nombre, id, liga, presupuesto = 100000, valor_del_club = 0, dic_jugadores = dict()):
+    def __init__(self, nombre, id, liga, presupuesto = 100000, valor_del_club = 0):
         self.nombre = nombre
         self.id = id
         self.liga = liga
         self.presupuesto = presupuesto
         self.valor_del_club = valor_del_club
-        self.dic_jugadores = dic_jugadores
+        self.dic_jugadores = dict()
     
     def comprar_jugador(self, club_vendedor, jugador):
         """
@@ -53,14 +53,17 @@ class Club():
                 print(key, "--->" , self.dic_jugadores.get(key).nombre, self.dic_jugadores.get(key).apellido)
         esta_a = "No"
         while esta_a == "No":   
-            dni= int(input("Ingrese el dni del arquero que no recibió goles: "))
-            for key in self.dic_jugadores.keys():
-                if dni == key:
-                    arquero = self.dic_jugadores.get(dni)
-                    arquero.tener_valla_invicta()
-                    esta_a = "Sí"
-            if esta_a == "No":
-                print("El jugador ingresado no existe.")
+            try:
+                dni= int(input("Ingrese el dni del arquero que no recibió goles: "))
+                for key in self.dic_jugadores.keys():
+                    if dni == key:
+                        arquero = self.dic_jugadores.get(dni)
+                        arquero.tener_valla_invicta()
+                        esta_a = "Sí"
+                if esta_a == "No":
+                    print("El jugador ingresado no existe.")
+            except:
+                print("Ingreso erroneamente el dato.")
         return arquero
 
     def buscar_arquero_recibio_gol(self):
@@ -73,15 +76,18 @@ class Club():
             if self.dic_jugadores.get(key).posicion == "Arquero":
                 print(key, "--->" , self.dic_jugadores.get(key).nombre, self.dic_jugadores.get(key).apellido)
         esta_a="No"
-        while esta_a == "No":   
-            dni= int(input("Ingrese el dni del arquero que no recibió goles: "))
-            for key in self.dic_jugadores.keys():
-                if dni == key:
-                    arquero = self.dic_jugadores.get(dni)
-                    arquero.recibir_gol()
-                    esta_a = "Sí"
-            if esta_a == "No":
-                print("El jugador ingresado no existe.")
+        while esta_a == "No":  
+            try: 
+                dni= int(input("Ingrese el dni del arquero que recibió goles: "))
+                for key in self.dic_jugadores.keys():
+                    if dni == key:
+                        arquero = self.dic_jugadores.get(dni)
+                        arquero.recibir_gol()
+                        esta_a = "Sí"
+                if esta_a == "No":
+                    print("El jugador ingresado no existe.")
+            except:
+                print("Ingreso erroneamente el dato.")
         return arquero
 
     def buscar_goleador(self):
@@ -94,14 +100,17 @@ class Club():
             print(key, "--->" , self.dic_jugadores.get(key).nombre, self.dic_jugadores.get(key).apellido)
         esta_g = "No"
         while esta_g == "No":
-            dni = int(input("Ingrese el dni del jugador que metió gol: "))
-            for key in self.dic_jugadores.keys():
-                if dni == key:
-                    goleador = self.dic_jugadores.get(dni)
-                    goleador.hacer_gol()
-                    esta_g = "Sí"
-            if esta_g == "No":
-                print("El jugador ingresado no existe.")
+            try:
+                dni = int(input("Ingrese el dni del jugador que metió gol: "))
+                for key in self.dic_jugadores.keys():
+                    if dni == key:
+                        goleador = self.dic_jugadores.get(dni)
+                        goleador.hacer_gol()
+                        esta_g = "Sí"
+                if esta_g == "No":
+                    print("El jugador ingresado no existe.")
+            except:
+                print("Ingreso erroneamente el dato.")
         return goleador
     
     def buscar_asistidor(self):
@@ -114,14 +123,17 @@ class Club():
             print(key, "--->" , self.dic_jugadores.get(key).nombre, self.dic_jugadores.get(key).apellido)
         esta_as = "No"
         while esta_as == "No":
-            dni = int(input("Ingrese el dni del jugador que metió gol: "))
-            for key in self.dic_jugadores.keys():
-                if dni == key:
-                    asistidor = self.dic_jugadores.get(dni)
-                    asistidor.dar_asistencia()
-                    esta_as = "Sí"
-            if esta_as == "No":
-                print("El jugador ingresado no existe.")
+            try:
+                dni = int(input("Ingrese el dni del jugador que metió gol: "))
+                for key in self.dic_jugadores.keys():
+                    if dni == key:
+                        asistidor = self.dic_jugadores.get(dni)
+                        asistidor.dar_asistencia()
+                        esta_as = "Sí"
+                if esta_as == "No":
+                    print("El jugador ingresado no existe.")
+            except:
+                print("Ingreso erroneamente el dato.")
         return asistidor
 
     def buscar_jugador_tarjeta(self):
@@ -134,14 +146,17 @@ class Club():
             print(key, "--->" , self.dic_jugadores.get(key).nombre, self.dic_jugadores.get(key).apellido)
         esta_j = "No"
         while esta_j == "No":
-            dni = int(input("Ingrese el dni del jugador que metió gol: "))
-            for key in self.dic_jugadores.keys():
-                if dni == key:
-                    jugador = self.dic_jugadores.get(dni)
-                    jugador.cantidad_tarjetas += 1
-                    esta_j = "Sí"
-            if esta_j == "No":
-                print("El jugador ingresado no existe.")
+            try:
+                dni = int(input("Ingrese el dni del jugador que metió gol: "))
+                for key in self.dic_jugadores.keys():
+                    if dni == key:
+                        jugador = self.dic_jugadores.get(dni)
+                        jugador.cantidad_tarjetas += 1
+                        esta_j = "Sí"
+                if esta_j == "No":
+                    print("El jugador ingresado no existe.")
+            except:
+                print("Ingreso erroneamente el dato.")
         return jugador
 
     def __str__(self):

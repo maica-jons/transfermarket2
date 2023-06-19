@@ -343,6 +343,7 @@ def leer_ligas():
                 datos_liga[3] = datos_liga[3].rstrip("\n")
                 obj_liga = Liga(datos_liga[0],datos_liga[1],datos_liga[2],datos_liga[3])
                 Liga.dic_ligas[obj_liga.pais] = obj_liga
+                print(obj_liga)
                 Liga.lista_nombre_ligas.append(obj_liga.nombre)
         archivo_ligas.close()
     except:
@@ -363,6 +364,7 @@ def leer_clubes():
                 datos_club[5] = datos_club[5].rstrip("\n")
                 obj_club = Club(datos_club[0],datos_club[1],datos_club[2],datos_club[3],datos_club[4],datos_club[5])
                 Club.dic_clubes[obj_club.id] = obj_club
+                print(obj_club)
         archivo_clubes.close()
     except:
         print("")
@@ -460,11 +462,10 @@ def menu_usuario():
         print("Error. Ingrese el numero de la opcion que desea hacer.")
 
 def menu_principal():
-    #leer_archivo()
-    # leer_ligas()
-    # leer_clubes()
-    # leer_arqueros()
-    # leer_jugadorescampo()
+    leer_ligas()
+    leer_clubes()
+    leer_arqueros()
+    leer_jugadorescampo()
     """
     Muestra un menú principal con diversas opciones y ejecuta las acciones correspondientes
     basadas en las opciones seleccionadas por el usuario.
@@ -503,9 +504,10 @@ def menu_principal():
                         print("Ingreso erroneamente el id.")
                 for key in Liga.dic_ligas.keys():
                     print(key,"--->",Liga.dic_ligas.get(key).nombre)
-                liga = str(input("Elija la liga a la que va a agregar el club. Las ligas disponibles son las siguientes: "))
-                while liga not in Liga.lista_nombre_ligas:
-                    liga = str(input("La liga ingresada no existe. Elija una de la lista que se le presentó: "))
+                pais = str(input("Elija el pais de la liga a la que va a agregar el club. Las ligas disponibles son las siguientes: "))
+                while pais not in Liga.dic_ligas.keys():
+                    pais = str(input("La liga ingresada no existe. Elija una de la lista que se le presentó: "))
+                liga = Liga.dic_ligas.get(pais).nombre
                 presu_ok = False
                 while presu_ok == False:
                     try:
@@ -517,9 +519,9 @@ def menu_principal():
                 club = Club(nombre,id,liga,presupuesto)    
                 Club.dic_clubes[id] = club
                 for key in Liga.dic_ligas.keys():
-                    if club.liga == Liga.dic_ligas.get(key).nombre:
+                    if key == pais:
                         Liga.dic_ligas.get(key).dic_clubes[id] = club
-                        Liga.dic_ligas.get(key).cant_clubes+=1
+                        # Liga.dic_ligas.get(key).cant_clubes+=1
                 guardar_archivos()
         
         elif guardo == 3:
@@ -579,9 +581,7 @@ def menu_principal():
                         idclub_ok = True
                     except:
                         print("Ingreso erroneamente el id del club.")
-                for key in Club.dic_clubes.keys():
-                    if idclub == key:
-                        club == Club.dic_clubes.get(key).nombre
+                club = Club.dic_clubes.get(idclub).nombre
                 estado = input("Ingrese el estado físico del jugador ('Activo' o 'Lesionado'): ")
                 estado = validar_estado(estado)
                 tarjetas_ok = False
@@ -624,6 +624,7 @@ def menu_principal():
                     for key in Club.dic_clubes.keys():
                         if arquero.club == Club.dic_clubes.get(key).nombre:
                             Club.dic_clubes.get(key).dic_jugadores[dni] = arquero
+                            Club.dic_clubes.get(key).valor_del_club += arquero.valor
                     guardar_archivos()
 
                 else: 
@@ -649,6 +650,7 @@ def menu_principal():
                     for key in Club.dic_clubes.keys():
                         if jugador_de_campo.club == Club.dic_clubes.get(key).nombre:
                             Club.dic_clubes.get(key).dic_jugadores[dni] = jugador_de_campo
+                            Club.dic_clubes.get(key).valor_del_club += jugador_de_campo.valor
                     guardar_archivos()
         
         elif guardo == 4:
@@ -670,8 +672,12 @@ def menu_principal():
                     liga_comprador = elegir_liga()
                     club_comprador = elegir_club(liga_comprador)
                     print("Ahora hay que elegir el jugador a comprar y su club.")
-                    liga_vendedor = elegir_liga()
-                    club_vendedor = elegir_club(liga_vendedor)
+                    club_vendedor = club_comprador
+                    while club_vendedor == club_comprador:
+                        liga_vendedor = elegir_liga()
+                        club_vendedor = elegir_club(liga_vendedor)
+                        if club_vendedor == club_comprador:
+                            print("El club no puede comprar un jugador de su mismo club. Intente nuevamente.")
                     jugador = elegir_jugador(club_vendedor)
                     club_comprador.comprar_jugador(club_vendedor,jugador)
                 else:
@@ -734,6 +740,7 @@ def menu_principal():
             else:
                 liga = elegir_liga()
                 print(liga)
+                liga.visualizar()
 
         elif guardo == 8:
             if len(Club.dic_clubes) == 0:
