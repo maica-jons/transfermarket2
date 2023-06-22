@@ -9,6 +9,9 @@ class Club():
         self.valor_del_club = valor_del_club
         self.dic_jugadores = dict()
     
+    def agregar_jugador(self, jugador):
+        self.dic_jugadores[jugador.dni] = jugador
+
     def comprar_jugador(self, club_vendedor, jugador):
         """
         Compra un jugador de otro club, siempre y cuando el club comprador tenga suficiente presupuesto.

@@ -6,6 +6,8 @@ from Liga import Liga
 from Usuario import *
 import datetime
 import math
+import matplotlib.pyplot as plt
+import json
 
 def validar_longitud_dni(dni):
     """
@@ -332,6 +334,8 @@ def guardar_archivos():
     archivo_arqueros.close()
     archivo_jugadorescampo.close()
 
+
+
 def leer_ligas():
     """
     Lee la información de las ligas desde un archivo de texto.
@@ -436,7 +440,8 @@ def menu():
 7- Visualizar Liga
 8- Visualizar Club
 9- Visualizar Jugador   
-10- Cerrar sesión (Salir)   
+10- Visualizar Grafico de presupuesto de Clubes en una Liga
+11- Cerrar sesión (Salir) 
 
 """))
             menu_ok = True
@@ -466,10 +471,14 @@ def menu_usuario():
         print("Error. Ingrese el numero de la opcion que desea hacer.")
 
 def menu_principal():
-    leer_ligas()
-    leer_clubes()
-    leer_arqueros()
-    leer_jugadorescampo()
+    try:
+        leer_ligas()
+        leer_clubes()
+        leer_arqueros()
+        leer_jugadorescampo()
+    except:
+        print("")
+
     """
     Muestra un menú principal con diversas opciones y ejecuta las acciones correspondientes
     basadas en las opciones seleccionadas por el usuario.
@@ -478,7 +487,7 @@ def menu_principal():
     jugar un partido, mostrar información de ligas, clubes y jugadores, y salir del programa.
     Cada opción ejecuta una serie de pasos para realizar la acción correspondiente.
     """
-    while(menu != 10):
+    while(menu != 11):
         guardo = menu()
         if guardo == 1:
             pais = str(input("Ingrese el país al que pertenece la liga: "))
@@ -525,7 +534,7 @@ def menu_principal():
                 for key in Liga.dic_ligas.keys():
                     if key == pais:
                         Liga.dic_ligas.get(key).dic_clubes[id] = club
-                        # Liga.dic_ligas.get(key).cant_clubes+=1
+                        Liga.dic_ligas.get(key).cant_clubes+=1
                 guardar_archivos()
         
         elif guardo == 3:
@@ -627,7 +636,8 @@ def menu_principal():
                     Arquero.dic_arqueros[dni] = arquero
                     for key in Club.dic_clubes.keys():
                         if arquero.club == Club.dic_clubes.get(key).nombre:
-                            Club.dic_clubes.get(key).dic_jugadores[dni] = arquero
+                            Club.dic_clubes.get(key).agregar_jugador(arquero)
+                            # Club.dic_clubes.get(key).dic_jugadores[dni] = arquero
                             Club.dic_clubes.get(key).valor_del_club += arquero.valor
                     guardar_archivos()
 
@@ -653,7 +663,8 @@ def menu_principal():
                     JugadorDeCampo.dic_jugadorescampo[dni] = jugador_de_campo
                     for key in Club.dic_clubes.keys():
                         if jugador_de_campo.club == Club.dic_clubes.get(key).nombre:
-                            Club.dic_clubes.get(key).dic_jugadores[dni] = jugador_de_campo
+                            Club.dic_clubes.get(key).agregar_jugador(jugador_de_campo)
+                            # Club.dic_clubes.get(key).dic_jugadores[dni] = jugador_de_campo
                             Club.dic_clubes.get(key).valor_del_club += jugador_de_campo.valor
                     guardar_archivos()
         
@@ -763,10 +774,33 @@ def menu_principal():
                 jugador = elegir_jugador(club)
                 print(jugador)
 
-        elif guardo < 1 or guardo >10 :
+        elif guardo == 10:
+            if len(Liga.dic_ligas) == 0:
+                print("No hay ninguna liga creada. Primero vaya a crear una.")
+            else:
+                liga = elegir_liga()
+                clubes=[]
+                presupuestos=[]
+
+                for key in liga.dic_clubes.keys():
+                    club = liga.dic_clubes.get(key).nombre
+                    presupuesto = liga.dic_clubes.get(key).presupuesto
+                    clubes.append(club)
+                    presupuestos.append(presupuesto)
+                    
+
+                plt.title(label="Gráfico de presupuestos por clubes",fontsize=20,color="blue")
+                plt.xlabel("Clubes")
+                plt.ylabel("Presupuestos")
+
+                plt.bar(clubes,presupuestos,color="green",width=0.5)
+                plt.show()
+
+
+        elif guardo < 1 or guardo >11 :
             print("Error al elegir acción. Intente de nuevo: ")
         
-        elif guardo == 10:
+        elif guardo == 11:
             break
 
 def guardo1():

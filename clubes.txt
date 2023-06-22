@@ -1,1 +1,1 @@
-vw,1,da,4225325,0,{}
+milan,42,serie a,500000,35000,{23232323: <JugadorDeCampo.JugadorDeCampo object at 0x10ecc3f40>}

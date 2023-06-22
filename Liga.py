@@ -3,12 +3,14 @@ class Liga():
     dic_ligas = dict() #Total de ligas
     lista_nombre_ligas = []
 
-    def __init__(self, nombre, pais, ):
+    def __init__(self, nombre, pais):
         self.nombre = nombre
         self.pais = pais
         self.dic_clubes = dict()  #Clubes de cada liga
         self.cant_clubes =  len(self.dic_clubes)
 
+    def argegar_club(self, club):
+        self.dic_clubes[club.id] = club
 
     def jugar_partido(self, club1, club2): #Club1 es local y club2 es vistante
 

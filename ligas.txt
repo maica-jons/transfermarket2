@@ -1,1 +1,1 @@
-da,arg,{1: <Club.Club object at 0x106b6bdf0>},0
+serie a,italia,{42: <Club.Club object at 0x10ed120d0>},1
